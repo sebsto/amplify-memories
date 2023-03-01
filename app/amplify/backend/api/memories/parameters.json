@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "memories",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "authmemories7f64bfec7f64bfec",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

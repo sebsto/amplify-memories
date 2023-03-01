@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sam-cognito-triggers
+  Lambda Triggers for Cognito Authentication With Apple Sign In 
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  CognitoCustomAuthenticationFunction:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: src/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - "arm64"
+      Environment: 
+        Variables:
+          COGNITO_CLIENT_ID: 1jge51guo9pb0pbvcfqvgsu0s3     
+
+Outputs:
+  CognitoCustomAuthenticationFunction:
+    Description: "Cognito Custom Authentication Lambda Function ARN"
+    Value: !GetAtt CognitoCustomAuthenticationFunction.Arn
+  CognitoCustomAuthenticationFunctionIamRole:
+    Description: "Implicit IAM Role created for Cognito Custom Authentication function"
+    Value: !GetAtt CognitoCustomAuthenticationFunctionRole.Arn

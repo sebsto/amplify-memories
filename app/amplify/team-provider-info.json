@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-memories-dev-173430-authRole",
+      "UnauthRoleArn": "arn:aws:iam::486652066693:role/amplify-memories-dev-173430-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::486652066693:role/amplify-memories-dev-173430-authRole",
+      "Region": "eu-central-1",
+      "DeploymentBucketName": "amplify-memories-dev-173430-deployment",
+      "UnauthRoleName": "amplify-memories-dev-173430-unauthRole",
+      "StackName": "amplify-memories-dev-173430",
+      "StackId": "arn:aws:cloudformation:eu-central-1:486652066693:stack/amplify-memories-dev-173430/c6ccb030-b785-11ed-a6cd-0aa95c49e432",
+      "AmplifyAppId": "dmlea65oww2qy"
+    },
+    "categories": {
+      "auth": {
+        "memories7f64bfec7f64bfec": {
+          "appleAppId": "com.stormacq.app.memories.Memories"
+        }
+      },
+      "api": {
+        "memories": {}
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "version": "1",
+    "region": "eu-central-1",
+    "userPoolId": "eu-central-1_5J1OjXlBa",
+    "userName": "username2",
+    "callerContext": {
+        "awsSdkVersion": "aws-sdk-unknown-unknown",
+        "clientId": "1irha5mrk1jjp86ikl7bhkj7gf"
+    },
+    "triggerSource": "VerifyAuthChallengeResponse_Authentication",
+    "request": {
+        "userAttributes": {
+            "sub": "bb09a339-38ee-4fad-891a-98969e0b6d4e",
+            "email_verified": "true",
+            "cognito:user_status": "CONFIRMED",
+            "email": "username2@email.com"
+        },
+        "privateChallengeParameters": {},
+        "challengeAnswer": "dummy token 123",
+        "userNotFound": false
+    },
+    "response": {
+        "answerCorrect": false
+    }
+}

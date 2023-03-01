@@ -1,0 +1,23 @@
+{
+  "version": "1",
+  "region": "eu-central-1",
+  "userPoolId": "eu-central-1_5J1OjXlBa",
+  "userName": "username",
+  "callerContext": {
+      "awsSdkVersion": "aws-sdk-unknown-unknown",
+      "clientId": "CLIENT_ID_NOT_APPLICABLE"
+  },
+  "triggerSource": "PreSignUp_AdminCreateUser",
+  "request": {
+      "userAttributes": {
+          "email_verified": "true",
+          "email": "username@email.com"
+      },
+      "validationData": "None"
+  },
+  "response": {
+      "autoConfirmUser": false,
+      "autoVerifyEmail": false,
+      "autoVerifyPhone": false
+  }
+}
