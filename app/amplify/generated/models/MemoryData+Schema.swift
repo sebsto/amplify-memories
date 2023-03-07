@@ -11,6 +11,7 @@ extension MemoryData {
     case image
     case star
     case favourite
+    case coordinates
     case createdAt
     case updatedAt
   }
@@ -25,7 +26,7 @@ extension MemoryData {
       rule(allow: .owner, ownerField: "owner", identityClaim: "cognito:username", provider: .userPools, operations: [.create, .update, .delete, .read])
     ]
     
-    model.syncPluralName = "MemoryData"
+    model.listPluralName = "MemoryData"
     
     model.attributes(
       .index(fields: ["owner", "moment"], name: nil),
@@ -36,9 +37,10 @@ extension MemoryData {
       .field(memoryData.owner, is: .required, ofType: .string),
       .field(memoryData.moment, is: .required, ofType: .string),
       .field(memoryData.description, is: .optional, ofType: .string),
-      .field(memoryData.image, is: .optional, ofType: .string),
-      .field(memoryData.star, is: .optional, ofType: .int),
-      .field(memoryData.favourite, is: .optional, ofType: .bool),
+      .field(memoryData.image, is: .required, ofType: .string),
+      .field(memoryData.star, is: .required, ofType: .int),
+      .field(memoryData.favourite, is: .required, ofType: .bool),
+      .field(memoryData.coordinates, is: .required, ofType: .embedded(type: CoordinateData.self)),
       .field(memoryData.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(memoryData.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

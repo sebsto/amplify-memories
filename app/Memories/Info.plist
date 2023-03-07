@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Access existing pictures to create memories</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Capture picture ofr new memories</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Record your current location to associate it with memories</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Record your current location to associate it with memories</string>
+</dict>
+</plist>

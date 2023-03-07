@@ -16,6 +16,7 @@ struct MemoriesApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView().environmentObject(ContentView.ViewModel())
+//            TEST()
         }
     }
 }

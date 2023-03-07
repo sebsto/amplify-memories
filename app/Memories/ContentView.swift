@@ -10,34 +10,98 @@ import AuthenticationServices // for Signin with Apple button
 
 struct ContentView: View {
     
-    @EnvironmentObject private var viewModel: ViewModel
-
+    @EnvironmentObject private var model: ViewModel
+    
+    let splashImageURL: URL?
+    
+    init() {
+        self.splashImageURL = Bundle.main.url(forResource: "splash", withExtension: "jpg")
+    }
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
-            SignInWithAppleButton(
-                onRequest: { viewModel.configureRequest($0) },
-                onCompletion: { viewModel.handleResult($0) }
-            )
-            .cornerRadius(10)
-            .frame(maxWidth: 300, maxHeight: 45)
-            Button {
-                Task {
-                    print("not implemented")
-                }
-            } label: {
-                Text("Create memory")
+        ZStack {
+            switch model.state {
+            case .signedOut:
+                unauthenticatedView()
+                
+            case .loading:
+                loadingView()
+                    .task() {
+                        await self.model.todaysMemories()
+                    }
+                
+            case .dataAvailable(let memories):
+                MainView(memories: memories)
+                
+            case .error(let error):
+                Text("An unknown error happened: \(error.localizedDescription)")
+                
             }
         }
-        .padding()
+        .environmentObject(self.model)
+        .task {
+            
+            // get the initial authentication status.
+            // This call will change app state according to result
+            try? await self.model.getInitialAuthStatus()
+            
+            // start a long polling to listen to auth updates
+            await self.model.listenAuthUpdate()
+        }
+        
+    }
+    
+    @ViewBuilder
+    func unauthenticatedView() -> some View {
+        ZStack {
+            
+            AsyncImage(url: splashImageURL) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            } placeholder: {
+                ProgressView()
+                    .frame(maxWidth: .infinity)
+            }
+            .ignoresSafeArea()
+            
+            VStack {
+                Spacer()
+                SignInWithAppleButton(
+                    onRequest: { model.configureRequest($0) },
+                    onCompletion: { model.handleResult($0) }
+                )
+                .cornerRadius(10)
+                .frame(maxWidth: 300, maxHeight: 70)
+                Spacer()
+                //signOutButton()
+            }
+            .padding()
+        }
+    }
+    
+    @ViewBuilder
+    func loadingView() -> some View {
+        VStack {
+            ProgressView()
+                .padding(.bottom)
+            Text("Loading...")
+        }
     }
 }
 
+
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        
+        let memories = Memory.mock
+        let model = ContentView.ViewModel()
+        let cv = ContentView()
+        let _ = cv.environmentObject(model)
+
+        return Group {
+            cv.unauthenticatedView()
+            MainView(memories: memories)
+        }
     }
 }

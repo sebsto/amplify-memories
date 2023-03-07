@@ -1,8 +1,16 @@
-type MemoryData @model @auth(rules: [{ allow: owner, ownerField: "owner" }]) {
+type MemoryData @model
+  @auth(rules: [{ allow: owner, ownerField: "owner" }]) {
+
   owner: String! @primaryKey(sortKeyFields: ["moment"])
   moment: String!
   description: String
-  image: String
-  star: Int
-  favourite: Boolean
+  image: String!
+  star: Int!
+  favourite: Boolean!
+  coordinates: CoordinateData!
+}
+
+type CoordinateData {
+    longitude: Float!
+    latitude: Float!
 }

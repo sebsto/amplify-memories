@@ -1,3 +1,6 @@
+activate:
+	source .venv/bin/activate
+
 build:
 	sam build --use-container
 

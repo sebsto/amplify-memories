@@ -1,0 +1,2 @@
+- rewrite auth Lambda functions in Swift 
+- write shell / swift script to post-configure Cognito with Lambda functions

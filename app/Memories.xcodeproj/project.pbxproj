@@ -7,6 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		000AA57929B71EAD00030DFE /* AddMemoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA57829B71EAD00030DFE /* AddMemoryView.swift */; };
+		000AA57B29B7204300030DFE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA57A29B7204300030DFE /* MainView.swift */; };
+		000AA57D29B720DC00030DFE /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA57C29B720DC00030DFE /* TodayView.swift */; };
+		000AA57F29B7219B00030DFE /* MemoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA57E29B7219B00030DFE /* MemoryDetailView.swift */; };
+		000AA58429B722B600030DFE /* MemoryCondensedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA58329B722B600030DFE /* MemoryCondensedView.swift */; };
+		000AA58929B724B700030DFE /* PhotoCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA58629B724B700030DFE /* PhotoCollection.swift */; };
+		000AA58A29B724B700030DFE /* PhotoCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA58729B724B700030DFE /* PhotoCollectionView.swift */; };
+		000AA58B29B724B700030DFE /* PhotoAssetCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA58829B724B700030DFE /* PhotoAssetCollection.swift */; };
+		000AA58D29B724E900030DFE /* CachedImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA58C29B724E900030DFE /* CachedImageManager.swift */; };
+		000AA58F29B7251A00030DFE /* PhotoAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA58E29B7251A00030DFE /* PhotoAsset.swift */; };
+		000AA59129B7254300030DFE /* PhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA59029B7254300030DFE /* PhotoView.swift */; };
+		000AA59329B7256400030DFE /* PhotoItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA59229B7256400030DFE /* PhotoItemView.swift */; };
+		000AA59529B7282F00030DFE /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA59429B7282F00030DFE /* Camera.swift */; };
+		000AA59729B729C900030DFE /* AddMemoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA59629B729C900030DFE /* AddMemoryViewModel.swift */; };
+		000AA59929B72A1100030DFE /* PhotoLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA59829B72A1100030DFE /* PhotoLibrary.swift */; };
+		000AA59B29B72B4700030DFE /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA59A29B72B4700030DFE /* CameraView.swift */; };
+		000AA59E29B72B7300030DFE /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA59C29B72B7300030DFE /* ThumbnailView.swift */; };
+		000AA59F29B72B7300030DFE /* ViewfinderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000AA59D29B72B7300030DFE /* ViewfinderView.swift */; };
+		00286C1729B139A8009ECE0E /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00286C1629B139A8009ECE0E /* MapView.swift */; };
 		00411A9129A77FA30084F128 /* MemoriesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00411A9029A77FA30084F128 /* MemoriesApp.swift */; };
 		00411A9329A77FA30084F128 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00411A9229A77FA30084F128 /* ContentView.swift */; };
 		00411A9529A77FA40084F128 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00411A9429A77FA40084F128 /* Assets.xcassets */; };
@@ -14,12 +33,25 @@
 		00411AA329A77FA40084F128 /* MemoriesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00411AA229A77FA40084F128 /* MemoriesTests.swift */; };
 		00411AAD29A77FA40084F128 /* MemoriesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00411AAC29A77FA40084F128 /* MemoriesUITests.swift */; };
 		00411AAF29A77FA40084F128 /* MemoriesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00411AAE29A77FA40084F128 /* MemoriesUITestsLaunchTests.swift */; };
-		00423DFE29AE6ED700517664 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 00423DFD29AE6ED700517664 /* AWSAPIPlugin */; };
-		00423E0029AE6ED700517664 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 00423DFF29AE6ED700517664 /* AWSCognitoAuthPlugin */; };
-		00423E0229AE6ED700517664 /* AWSS3StoragePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 00423E0129AE6ED700517664 /* AWSS3StoragePlugin */; };
-		00423E0429AE6ED700517664 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 00423E0329AE6ED700517664 /* Amplify */; };
 		005A720029AE854500B4F197 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 005A71FE29AE854500B4F197 /* amplifyconfiguration.json */; };
 		005A720129AE854500B4F197 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 005A71FF29AE854500B4F197 /* awsconfiguration.json */; };
+		006EBCD729B0FDB30010F534 /* landscape1.png in Resources */ = {isa = PBXBuildFile; fileRef = 006EBCD129B0FDB30010F534 /* landscape1.png */; };
+		006EBCD829B0FDB30010F534 /* landscape3.png in Resources */ = {isa = PBXBuildFile; fileRef = 006EBCD229B0FDB30010F534 /* landscape3.png */; };
+		006EBCD929B0FDB30010F534 /* landscape4.png in Resources */ = {isa = PBXBuildFile; fileRef = 006EBCD329B0FDB30010F534 /* landscape4.png */; };
+		006EBCDA29B0FDB30010F534 /* landscape6.png in Resources */ = {isa = PBXBuildFile; fileRef = 006EBCD429B0FDB30010F534 /* landscape6.png */; };
+		006EBCDB29B0FDB30010F534 /* landscape2.png in Resources */ = {isa = PBXBuildFile; fileRef = 006EBCD529B0FDB30010F534 /* landscape2.png */; };
+		006EBCDC29B0FDB30010F534 /* landscape5.png in Resources */ = {isa = PBXBuildFile; fileRef = 006EBCD629B0FDB30010F534 /* landscape5.png */; };
+		00729D1629B0F24200BDA200 /* ModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00729D1529B0F24200BDA200 /* ModelMock.swift */; };
+		007CF0AC29B0BE8A00FE5E52 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 007CF0AB29B0BE8A00FE5E52 /* Amplify */; };
+		007CF0AE29B0BE8A00FE5E52 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 007CF0AD29B0BE8A00FE5E52 /* AWSAPIPlugin */; };
+		007CF0B029B0BE8A00FE5E52 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 007CF0AF29B0BE8A00FE5E52 /* AWSCognitoAuthPlugin */; };
+		007CF0B229B0BE9000FE5E52 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 007CF0B129B0BE9000FE5E52 /* Amplify */; };
+		007CF0B429B0BE9000FE5E52 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 007CF0B329B0BE9000FE5E52 /* AWSAPIPlugin */; };
+		007CF0B629B0BE9000FE5E52 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 007CF0B529B0BE9000FE5E52 /* AWSCognitoAuthPlugin */; };
+		00805C1729AFD115002F75C4 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 00805C1629AFD115002F75C4 /* AWSAPIPlugin */; };
+		00805C1929AFD115002F75C4 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 00805C1829AFD115002F75C4 /* AWSCognitoAuthPlugin */; };
+		00805C1B29AFD115002F75C4 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 00805C1A29AFD115002F75C4 /* Amplify */; };
+		0082D4C229AFAC6D0008457E /* splash.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0082D4C129AFAC6D0008457E /* splash.jpg */; };
 		00921F9D29AF430F0020A426 /* Backend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00921F9C29AF430F0020A426 /* Backend.swift */; };
 		00921F9F29AF45520020A426 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00921F9E29AF45520020A426 /* ViewModel.swift */; };
 		00921FA129AF49050020A426 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00921FA029AF49050020A426 /* Model.swift */; };
@@ -32,6 +64,14 @@
 		00921FAC29AF4BE10020A426 /* MemoryData+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00921FA529AF4BE10020A426 /* MemoryData+Schema.swift */; };
 		00921FAD29AF4BE10020A426 /* MemoryData+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00921FA529AF4BE10020A426 /* MemoryData+Schema.swift */; };
 		00921FAE29AF4BE10020A426 /* MemoryData+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00921FA529AF4BE10020A426 /* MemoryData+Schema.swift */; };
+		00AB9A2929B25CCF00336393 /* CoordinateData+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2729B25CCF00336393 /* CoordinateData+Schema.swift */; };
+		00AB9A2A29B25CCF00336393 /* CoordinateData+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2729B25CCF00336393 /* CoordinateData+Schema.swift */; };
+		00AB9A2B29B25CCF00336393 /* CoordinateData+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2729B25CCF00336393 /* CoordinateData+Schema.swift */; };
+		00AB9A2C29B25CCF00336393 /* CoordinateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2829B25CCF00336393 /* CoordinateData.swift */; };
+		00AB9A2D29B25CCF00336393 /* CoordinateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2829B25CCF00336393 /* CoordinateData.swift */; };
+		00AB9A2E29B25CCF00336393 /* CoordinateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2829B25CCF00336393 /* CoordinateData.swift */; };
+		00AB9A3029B47FA400336393 /* DelayedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2F29B47FA400336393 /* DelayedView.swift */; };
+		00AB9A3529B4A4B000336393 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 00AB9A3429B4A4B000336393 /* OrderedCollections */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +92,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		000AA57829B71EAD00030DFE /* AddMemoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoryView.swift; sourceTree = "<group>"; };
+		000AA57A29B7204300030DFE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		000AA57C29B720DC00030DFE /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		000AA57E29B7219B00030DFE /* MemoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryDetailView.swift; sourceTree = "<group>"; };
+		000AA58329B722B600030DFE /* MemoryCondensedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryCondensedView.swift; sourceTree = "<group>"; };
+		000AA58629B724B700030DFE /* PhotoCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollection.swift; sourceTree = "<group>"; };
+		000AA58729B724B700030DFE /* PhotoCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCollectionView.swift; sourceTree = "<group>"; };
+		000AA58829B724B700030DFE /* PhotoAssetCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAssetCollection.swift; sourceTree = "<group>"; };
+		000AA58C29B724E900030DFE /* CachedImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CachedImageManager.swift; sourceTree = "<group>"; };
+		000AA58E29B7251A00030DFE /* PhotoAsset.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAsset.swift; sourceTree = "<group>"; };
+		000AA59029B7254300030DFE /* PhotoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoView.swift; sourceTree = "<group>"; };
+		000AA59229B7256400030DFE /* PhotoItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoItemView.swift; sourceTree = "<group>"; };
+		000AA59429B7282F00030DFE /* Camera.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		000AA59629B729C900030DFE /* AddMemoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMemoryViewModel.swift; sourceTree = "<group>"; };
+		000AA59829B72A1100030DFE /* PhotoLibrary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoLibrary.swift; sourceTree = "<group>"; };
+		000AA59A29B72B4700030DFE /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
+		000AA59C29B72B7300030DFE /* ThumbnailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
+		000AA59D29B72B7300030DFE /* ViewfinderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewfinderView.swift; sourceTree = "<group>"; };
+		00286C1629B139A8009ECE0E /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		00411A8D29A77FA30084F128 /* Memories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Memories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00411A9029A77FA30084F128 /* MemoriesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoriesApp.swift; sourceTree = "<group>"; };
 		00411A9229A77FA30084F128 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -68,12 +127,23 @@
 		005A71FE29AE854500B4F197 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
 		005A71FF29AE854500B4F197 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
 		005A720229AE86FC00B4F197 /* schema.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; name = schema.graphql; path = amplify/backend/api/memories/schema.graphql; sourceTree = "<group>"; };
+		006EBCD129B0FDB30010F534 /* landscape1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landscape1.png; sourceTree = "<group>"; };
+		006EBCD229B0FDB30010F534 /* landscape3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landscape3.png; sourceTree = "<group>"; };
+		006EBCD329B0FDB30010F534 /* landscape4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landscape4.png; sourceTree = "<group>"; };
+		006EBCD429B0FDB30010F534 /* landscape6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landscape6.png; sourceTree = "<group>"; };
+		006EBCD529B0FDB30010F534 /* landscape2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landscape2.png; sourceTree = "<group>"; };
+		006EBCD629B0FDB30010F534 /* landscape5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = landscape5.png; sourceTree = "<group>"; };
+		00729D1529B0F24200BDA200 /* ModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelMock.swift; sourceTree = "<group>"; };
+		0082D4C129AFAC6D0008457E /* splash.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = splash.jpg; sourceTree = "<group>"; };
 		00921F9C29AF430F0020A426 /* Backend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Backend.swift; sourceTree = "<group>"; };
 		00921F9E29AF45520020A426 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		00921FA029AF49050020A426 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		00921FA329AF4BE00020A426 /* MemoryData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MemoryData.swift; path = amplify/generated/models/MemoryData.swift; sourceTree = "<group>"; };
 		00921FA429AF4BE00020A426 /* AmplifyModels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AmplifyModels.swift; path = amplify/generated/models/AmplifyModels.swift; sourceTree = "<group>"; };
 		00921FA529AF4BE10020A426 /* MemoryData+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MemoryData+Schema.swift"; path = "amplify/generated/models/MemoryData+Schema.swift"; sourceTree = "<group>"; };
+		00AB9A2729B25CCF00336393 /* CoordinateData+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CoordinateData+Schema.swift"; path = "amplify/generated/models/CoordinateData+Schema.swift"; sourceTree = "<group>"; };
+		00AB9A2829B25CCF00336393 /* CoordinateData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoordinateData.swift; path = amplify/generated/models/CoordinateData.swift; sourceTree = "<group>"; };
+		00AB9A2F29B47FA400336393 /* DelayedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,10 +151,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00423DFE29AE6ED700517664 /* AWSAPIPlugin in Frameworks */,
-				00423E0429AE6ED700517664 /* Amplify in Frameworks */,
-				00423E0029AE6ED700517664 /* AWSCognitoAuthPlugin in Frameworks */,
-				00423E0229AE6ED700517664 /* AWSS3StoragePlugin in Frameworks */,
+				00805C1B29AFD115002F75C4 /* Amplify in Frameworks */,
+				00805C1729AFD115002F75C4 /* AWSAPIPlugin in Frameworks */,
+				00AB9A3529B4A4B000336393 /* OrderedCollections in Frameworks */,
+				00805C1929AFD115002F75C4 /* AWSCognitoAuthPlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +162,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				007CF0AE29B0BE8A00FE5E52 /* AWSAPIPlugin in Frameworks */,
+				007CF0AC29B0BE8A00FE5E52 /* Amplify in Frameworks */,
+				007CF0B029B0BE8A00FE5E52 /* AWSCognitoAuthPlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,12 +172,69 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				007CF0B429B0BE9000FE5E52 /* AWSAPIPlugin in Frameworks */,
+				007CF0B229B0BE9000FE5E52 /* Amplify in Frameworks */,
+				007CF0B629B0BE9000FE5E52 /* AWSCognitoAuthPlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		000AA58029B7220F00030DFE /* views */ = {
+			isa = PBXGroup;
+			children = (
+				00411A9229A77FA30084F128 /* ContentView.swift */,
+				000AA57A29B7204300030DFE /* MainView.swift */,
+				000AA57C29B720DC00030DFE /* TodayView.swift */,
+				000AA58329B722B600030DFE /* MemoryCondensedView.swift */,
+				000AA57E29B7219B00030DFE /* MemoryDetailView.swift */,
+				000AA57829B71EAD00030DFE /* AddMemoryView.swift */,
+				00286C1629B139A8009ECE0E /* MapView.swift */,
+				00AB9A2F29B47FA400336393 /* DelayedView.swift */,
+			);
+			name = views;
+			sourceTree = "<group>";
+		};
+		000AA58129B7223C00030DFE /* model */ = {
+			isa = PBXGroup;
+			children = (
+				00921FA029AF49050020A426 /* Model.swift */,
+				00729D1529B0F24200BDA200 /* ModelMock.swift */,
+				00921F9E29AF45520020A426 /* ViewModel.swift */,
+				000AA59629B729C900030DFE /* AddMemoryViewModel.swift */,
+			);
+			name = model;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		000AA58229B7225700030DFE /* service */ = {
+			isa = PBXGroup;
+			children = (
+				00921F9C29AF430F0020A426 /* Backend.swift */,
+			);
+			name = service;
+			sourceTree = "<group>";
+		};
+		000AA58529B7247E00030DFE /* photos */ = {
+			isa = PBXGroup;
+			children = (
+				000AA59429B7282F00030DFE /* Camera.swift */,
+				000AA59A29B72B4700030DFE /* CameraView.swift */,
+				000AA58C29B724E900030DFE /* CachedImageManager.swift */,
+				000AA58E29B7251A00030DFE /* PhotoAsset.swift */,
+				000AA58829B724B700030DFE /* PhotoAssetCollection.swift */,
+				000AA58629B724B700030DFE /* PhotoCollection.swift */,
+				000AA58729B724B700030DFE /* PhotoCollectionView.swift */,
+				000AA59229B7256400030DFE /* PhotoItemView.swift */,
+				000AA59829B72A1100030DFE /* PhotoLibrary.swift */,
+				000AA59029B7254300030DFE /* PhotoView.swift */,
+				000AA59C29B72B7300030DFE /* ThumbnailView.swift */,
+				000AA59D29B72B7300030DFE /* ViewfinderView.swift */,
+			);
+			name = photos;
+			sourceTree = "<group>";
+		};
 		00411A8429A77FA30084F128 = {
 			isa = PBXGroup;
 			children = (
@@ -115,7 +245,9 @@
 				005A71FD29AE853200B4F197 /* Amplify Configuration */,
 				00423DFB29AE5F5200517664 /* design.md */,
 				005A71F929AE840700B4F197 /* Memories.xcodeproj */,
+				0082D4C029AFAC6D0008457E /* Resources */,
 				00411A8E29A77FA30084F128 /* Products */,
+				007CF0AA29B0BE8A00FE5E52 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,10 +265,10 @@
 			isa = PBXGroup;
 			children = (
 				00411A9029A77FA30084F128 /* MemoriesApp.swift */,
-				00411A9229A77FA30084F128 /* ContentView.swift */,
-				00921F9E29AF45520020A426 /* ViewModel.swift */,
-				00921FA029AF49050020A426 /* Model.swift */,
-				00921F9C29AF430F0020A426 /* Backend.swift */,
+				000AA58129B7223C00030DFE /* model */,
+				000AA58229B7225700030DFE /* service */,
+				000AA58029B7220F00030DFE /* views */,
+				000AA58529B7247E00030DFE /* photos */,
 				00411A9429A77FA40084F128 /* Assets.xcassets */,
 				00411A9629A77FA40084F128 /* Memories.entitlements */,
 				00411A9729A77FA40084F128 /* Preview Content */,
@@ -184,12 +316,35 @@
 			name = "Amplify Configuration";
 			sourceTree = "<group>";
 		};
+		007CF0AA29B0BE8A00FE5E52 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0082D4C029AFAC6D0008457E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				006EBCD129B0FDB30010F534 /* landscape1.png */,
+				006EBCD529B0FDB30010F534 /* landscape2.png */,
+				006EBCD229B0FDB30010F534 /* landscape3.png */,
+				006EBCD329B0FDB30010F534 /* landscape4.png */,
+				006EBCD629B0FDB30010F534 /* landscape5.png */,
+				006EBCD429B0FDB30010F534 /* landscape6.png */,
+				0082D4C129AFAC6D0008457E /* splash.jpg */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		00921FA229AF4BCA0020A426 /* Amplify Models */ = {
 			isa = PBXGroup;
 			children = (
 				00921FA429AF4BE00020A426 /* AmplifyModels.swift */,
 				00921FA329AF4BE00020A426 /* MemoryData.swift */,
 				00921FA529AF4BE10020A426 /* MemoryData+Schema.swift */,
+				00AB9A2829B25CCF00336393 /* CoordinateData.swift */,
+				00AB9A2729B25CCF00336393 /* CoordinateData+Schema.swift */,
 			);
 			name = "Amplify Models";
 			sourceTree = "<group>";
@@ -211,10 +366,10 @@
 			);
 			name = Memories;
 			packageProductDependencies = (
-				00423DFD29AE6ED700517664 /* AWSAPIPlugin */,
-				00423DFF29AE6ED700517664 /* AWSCognitoAuthPlugin */,
-				00423E0129AE6ED700517664 /* AWSS3StoragePlugin */,
-				00423E0329AE6ED700517664 /* Amplify */,
+				00805C1629AFD115002F75C4 /* AWSAPIPlugin */,
+				00805C1829AFD115002F75C4 /* AWSCognitoAuthPlugin */,
+				00805C1A29AFD115002F75C4 /* Amplify */,
+				00AB9A3429B4A4B000336393 /* OrderedCollections */,
 			);
 			productName = Memories;
 			productReference = 00411A8D29A77FA30084F128 /* Memories.app */;
@@ -234,6 +389,11 @@
 				00411AA029A77FA40084F128 /* PBXTargetDependency */,
 			);
 			name = MemoriesTests;
+			packageProductDependencies = (
+				007CF0AB29B0BE8A00FE5E52 /* Amplify */,
+				007CF0AD29B0BE8A00FE5E52 /* AWSAPIPlugin */,
+				007CF0AF29B0BE8A00FE5E52 /* AWSCognitoAuthPlugin */,
+			);
 			productName = MemoriesTests;
 			productReference = 00411A9E29A77FA40084F128 /* MemoriesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -252,6 +412,11 @@
 				00411AAA29A77FA40084F128 /* PBXTargetDependency */,
 			);
 			name = MemoriesUITests;
+			packageProductDependencies = (
+				007CF0B129B0BE9000FE5E52 /* Amplify */,
+				007CF0B329B0BE9000FE5E52 /* AWSAPIPlugin */,
+				007CF0B529B0BE9000FE5E52 /* AWSCognitoAuthPlugin */,
+			);
 			productName = MemoriesUITests;
 			productReference = 00411AA829A77FA40084F128 /* MemoriesUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
@@ -289,7 +454,8 @@
 			);
 			mainGroup = 00411A8429A77FA30084F128;
 			packageReferences = (
-				00423DFC29AE6ED600517664 /* XCRemoteSwiftPackageReference "amplify-swift" */,
+				00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */,
+				00AB9A3329B4A4B000336393 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 00411A8E29A77FA30084F128 /* Products */;
 			projectDirPath = "";
@@ -313,10 +479,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				006EBCD929B0FDB30010F534 /* landscape4.png in Resources */,
+				006EBCD829B0FDB30010F534 /* landscape3.png in Resources */,
+				006EBCDC29B0FDB30010F534 /* landscape5.png in Resources */,
+				0082D4C229AFAC6D0008457E /* splash.jpg in Resources */,
 				005A720129AE854500B4F197 /* awsconfiguration.json in Resources */,
 				00411A9929A77FA40084F128 /* Preview Assets.xcassets in Resources */,
 				005A720029AE854500B4F197 /* amplifyconfiguration.json in Resources */,
+				006EBCDB29B0FDB30010F534 /* landscape2.png in Resources */,
+				006EBCDA29B0FDB30010F534 /* landscape6.png in Resources */,
 				00411A9529A77FA40084F128 /* Assets.xcassets in Resources */,
+				006EBCD729B0FDB30010F534 /* landscape1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,13 +514,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				000AA58929B724B700030DFE /* PhotoCollection.swift in Sources */,
+				000AA59F29B72B7300030DFE /* ViewfinderView.swift in Sources */,
+				000AA58A29B724B700030DFE /* PhotoCollectionView.swift in Sources */,
 				00921FA629AF4BE10020A426 /* MemoryData.swift in Sources */,
+				000AA57929B71EAD00030DFE /* AddMemoryView.swift in Sources */,
+				000AA59929B72A1100030DFE /* PhotoLibrary.swift in Sources */,
+				000AA59729B729C900030DFE /* AddMemoryViewModel.swift in Sources */,
+				000AA58B29B724B700030DFE /* PhotoAssetCollection.swift in Sources */,
 				00921FAC29AF4BE10020A426 /* MemoryData+Schema.swift in Sources */,
 				00411A9329A77FA30084F128 /* ContentView.swift in Sources */,
+				00AB9A2C29B25CCF00336393 /* CoordinateData.swift in Sources */,
 				00921F9D29AF430F0020A426 /* Backend.swift in Sources */,
+				000AA57D29B720DC00030DFE /* TodayView.swift in Sources */,
+				000AA59529B7282F00030DFE /* Camera.swift in Sources */,
+				000AA59B29B72B4700030DFE /* CameraView.swift in Sources */,
+				000AA59329B7256400030DFE /* PhotoItemView.swift in Sources */,
 				00411A9129A77FA30084F128 /* MemoriesApp.swift in Sources */,
+				000AA58F29B7251A00030DFE /* PhotoAsset.swift in Sources */,
 				00921F9F29AF45520020A426 /* ViewModel.swift in Sources */,
 				00921FA129AF49050020A426 /* Model.swift in Sources */,
+				000AA58D29B724E900030DFE /* CachedImageManager.swift in Sources */,
+				000AA59129B7254300030DFE /* PhotoView.swift in Sources */,
+				00AB9A3029B47FA400336393 /* DelayedView.swift in Sources */,
+				00AB9A2929B25CCF00336393 /* CoordinateData+Schema.swift in Sources */,
+				00286C1729B139A8009ECE0E /* MapView.swift in Sources */,
+				00729D1629B0F24200BDA200 /* ModelMock.swift in Sources */,
+				000AA57F29B7219B00030DFE /* MemoryDetailView.swift in Sources */,
+				000AA57B29B7204300030DFE /* MainView.swift in Sources */,
+				000AA59E29B72B7300030DFE /* ThumbnailView.swift in Sources */,
+				000AA58429B722B600030DFE /* MemoryCondensedView.swift in Sources */,
 				00921FA929AF4BE10020A426 /* AmplifyModels.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,9 +553,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				00921FA729AF4BE10020A426 /* MemoryData.swift in Sources */,
+				00AB9A2D29B25CCF00336393 /* CoordinateData.swift in Sources */,
 				00921FAD29AF4BE10020A426 /* MemoryData+Schema.swift in Sources */,
 				00921FAA29AF4BE10020A426 /* AmplifyModels.swift in Sources */,
 				00411AA329A77FA40084F128 /* MemoriesTests.swift in Sources */,
+				00AB9A2A29B25CCF00336393 /* CoordinateData+Schema.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,8 +565,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00AB9A2E29B25CCF00336393 /* CoordinateData.swift in Sources */,
 				00921FAB29AF4BE10020A426 /* AmplifyModels.swift in Sources */,
 				00921FA829AF4BE10020A426 /* MemoryData.swift in Sources */,
+				00AB9A2B29B25CCF00336393 /* CoordinateData+Schema.swift in Sources */,
 				00921FAE29AF4BE10020A426 /* MemoryData+Schema.swift in Sources */,
 				00411AAF29A77FA40084F128 /* MemoriesUITestsLaunchTests.swift in Sources */,
 				00411AAD29A77FA40084F128 /* MemoriesUITests.swift in Sources */,
@@ -441,6 +641,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -493,6 +695,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MACOSX_DEPLOYMENT_TARGET = 13.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -511,8 +715,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Memories/Preview Content\"";
 				DEVELOPMENT_TEAM = 56U756R2L2;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Memories/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -531,7 +737,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.stormacq.app.memories.Memories;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -549,8 +757,10 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Memories/Preview Content\"";
 				DEVELOPMENT_TEAM = 56U756R2L2;
 				ENABLE_HARDENED_RUNTIME = YES;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Memories/Info.plist;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -569,7 +779,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.stormacq.app.memories.Memories;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -708,7 +920,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		00423DFC29AE6ED600517664 /* XCRemoteSwiftPackageReference "amplify-swift" */ = {
+		00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aws-amplify/amplify-swift/";
 			requirement = {
@@ -716,28 +928,66 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		00AB9A3329B4A4B000336393 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		00423DFD29AE6ED700517664 /* AWSAPIPlugin */ = {
+		007CF0AB29B0BE8A00FE5E52 /* Amplify */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 00423DFC29AE6ED600517664 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			package = 00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = Amplify;
+		};
+		007CF0AD29B0BE8A00FE5E52 /* AWSAPIPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */;
 			productName = AWSAPIPlugin;
 		};
-		00423DFF29AE6ED700517664 /* AWSCognitoAuthPlugin */ = {
+		007CF0AF29B0BE8A00FE5E52 /* AWSCognitoAuthPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 00423DFC29AE6ED600517664 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			package = 00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */;
 			productName = AWSCognitoAuthPlugin;
 		};
-		00423E0129AE6ED700517664 /* AWSS3StoragePlugin */ = {
+		007CF0B129B0BE9000FE5E52 /* Amplify */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 00423DFC29AE6ED600517664 /* XCRemoteSwiftPackageReference "amplify-swift" */;
-			productName = AWSS3StoragePlugin;
-		};
-		00423E0329AE6ED700517664 /* Amplify */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 00423DFC29AE6ED600517664 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			package = 00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */;
 			productName = Amplify;
+		};
+		007CF0B329B0BE9000FE5E52 /* AWSAPIPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSAPIPlugin;
+		};
+		007CF0B529B0BE9000FE5E52 /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		00805C1629AFD115002F75C4 /* AWSAPIPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSAPIPlugin;
+		};
+		00805C1829AFD115002F75C4 /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		00805C1A29AFD115002F75C4 /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00805C1529AFD115002F75C4 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = Amplify;
+		};
+		00AB9A3429B4A4B000336393 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 00AB9A3329B4A4B000336393 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

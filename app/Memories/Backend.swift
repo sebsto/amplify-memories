@@ -44,14 +44,61 @@ struct Backend {
     }
 }
 
-// MARK: Amplify Identity related functions
+// MARK: Amplify Authentication-related functions
 extension Backend {
+    
+    enum AuthStatus {
+        case signedIn
+        case signedOut
+        case sessionExpired
+    }
+    
+    // let's check if user is signedIn or not
+    public func getInitialAuthStatus() async throws -> AuthStatus {
+        let session = try await Amplify.Auth.fetchAuthSession()
+        return session.isSignedIn ? AuthStatus.signedIn : AuthStatus.signedOut
+    }
+    
+    // produce an async stream of updates of AuthStatus
+    public func listenAuthUpdate() async -> AsyncStream<AuthStatus> {
+        
+        return AsyncStream { continuation in
+            
+            continuation.onTermination = { @Sendable status in
+                logger.error("[BACKEND] streaming auth status terminated with status : \(status)")
+            }
+            
+            // listen to auth events.
+            // see https://github.com/aws-amplify/amplify-ios/blob/master/Amplify/Categories/Auth/Models/AuthEventName.swift
+            let _  = Amplify.Hub.listen(to: .auth) { payload in
+                
+                switch payload.eventName {
+                    
+                case HubPayload.EventName.Auth.signedIn:
+                    logger.debug("==HUB== User signed In, update UI")
+                    continuation.yield(AuthStatus.signedIn)
+                case HubPayload.EventName.Auth.signedOut:
+                    logger.debug("==HUB== User signed Out, update UI")
+                    continuation.yield(AuthStatus.signedOut)
+                case HubPayload.EventName.Auth.sessionExpired:
+                    logger.debug("==HUB== Session expired, show sign in aui")
+                    continuation.yield(AuthStatus.sessionExpired)
+                default:
+                    //logger.debug("==HUB== \(payload)")
+                    break
+                }
+            }
+        }
+    }
     
     /*
      * Triggers a Cognito CUSTOM_AUTH FLOW.
      * The password is not used. Cognito asks for a custom challenge.
      * The client app presents the IDP Token (Sign In With Apple) as challenge
      * The token is verified on the server side and authentication is succesful when token is valid
+     *
+     * The very first time, the user id does not exist on Cognito, an error is returned
+     * and the signUp() method is called to dynamically create the user, with all its attributes
      */
     public func signIn(_ user: UserData) async throws {
         
@@ -71,11 +118,11 @@ extension Backend {
                     
                 case .confirmSignInWithCustomChallenge(_):
                     logger.debug("Signin procedure: the next step is to present the token")
-                    // I do not inspect additionInfo because I wrote the Lambda and I know what it returns
-                    // ["providers": "Apple", "challenge": "present a valid JWT token issued by a recognized provider", "USERNAME": "001870....1316"]
                     let result = try await Amplify.Auth.confirmSignIn(challengeResponse: "Apple:::\(token)")
                     if result.isSignedIn {
-                        logger.debug("Signin procedure: user signed in succesfully")
+                        logger.debug("Signin procedure: user signed in successfully")
+                    } else {
+                        logger.error("Signin procedure: failed to signin")
                     }
                     
                 default:
@@ -91,20 +138,20 @@ extension Backend {
             if error.debugDescription.contains("User does not exist") {
                 
                 // create the user on the backend
-                try! await self.signUp(user)
+                try await self.signUp(user)
                 
                 // try signin again
-                try! await self.signIn(user)
+                try await self.signIn(user)
             }
+        } catch {
+            fatalError("Unexpected error : \(error)")
         }
         
     }
     
-    // signout globally
+    // signout
     public func signOut() async {
-        // https://docs.amplify.aws/lib/auth/signOut/q/platform/ios
-        let options = AuthSignOutRequest.Options(globalSignOut: true)
-        let _ = await Amplify.Auth.signOut(options: options)
+        let _ =  await Amplify.Auth.signOut()
         logger.debug("Successfully signed out")
     }
     
@@ -129,20 +176,31 @@ extension Backend {
 // MARK: Data CRUD functions
 extension Backend {
     
-    func createMemory() async {
-        let memory = MemoryData(owner: "sebsto", moment: "20220228204500", description: "description", star:5, favourite: true)
-        do {
-            let result = try await Amplify.API.mutate(request: .create(memory))
-            switch result {
-            case .success(let memory):
-                print("Successfully created the memory: \(memory)")
-            case .failure(let graphQLError):
-                print("Failed to create graphql \(graphQLError)")
-            }
-        } catch let error as APIError {
-            print("Failed to create a memory: ", error)
-        } catch {
-            print("Unexpected error: \(error)")
+    func todayMemories() async throws -> [Memory] {
+        return Memory.mock
+    }
+    
+    func createMemory() async throws {
+        
+        let user = try await Amplify.Auth.getCurrentUser()
+        
+        let coordinate = Memory.mockCoordinates()
+        let coordinateData = CoordinateData(longitude: coordinate.longitude, latitude: coordinate.latitude)
+        let memory = MemoryData(owner: user.userId,
+                                moment: "20220228204500",
+                                description: "description",
+                                image: "",
+                                star:5,
+                                favourite: true,
+                                coordinates: coordinateData)
+        
+        let result = try await Amplify.API.mutate(request: .create(memory))
+        switch result {
+        case .success(let memory):
+            logger.debug("Successfully created the memory: \(memory)")
+        case .failure(let graphQLError):
+            logger.error("Failed to create the memory \(graphQLError)")
+            throw graphQLError
         }
     }
 }
