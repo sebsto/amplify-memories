@@ -13,6 +13,8 @@ struct PhotoItemView: View {
     @State private var image: Image?
     @State private var imageRequestID: PHImageRequestID?
 
+    @State private var tap = false
+
     var body: some View {
         
         Group {
@@ -20,6 +22,15 @@ struct PhotoItemView: View {
                 image
                     .resizable()
                     .scaledToFill()
+//                    .scaleEffect(tap ? 1.2 : 1)
+//                    .animation(.spring(response: 0.4, dampingFraction: 0.6),value: UUID())
+//                    .onTapGesture {
+//                        tap.toggle()
+//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+//                            tap = false
+//                        }
+//                    }
+
             } else {
                 ProgressView()
                     .scaleEffect(0.5)
@@ -27,13 +38,7 @@ struct PhotoItemView: View {
         }
         .task {
             guard image == nil, let cache = cache else { return }
-            imageRequestID = await cache.requestImage(for: asset, targetSize: imageSize) { result in
-                Task {
-                    if let result = result {
-                        self.image = result.image
-                    }
-                }
-            }
+            self.image = await Image(uiImage: asset.uiImage(in: cache, targetSize: imageSize))
         }
     }
 }

@@ -3,6 +3,7 @@ See the License.txt file for this sample’s licensing information.
 */
 
 import Photos
+import SwiftUI
 import os.log
 
 struct PhotoAsset: Identifiable {
@@ -74,6 +75,27 @@ extension PhotoAsset: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(identifier)
     }
+}
+
+extension PhotoAsset {
+
+    func uiImage(in cache: CachedImageManager, targetSize: CGSize) async -> UIImage {
+        
+        return await withCheckedContinuation({
+            (continuation: CheckedContinuation<UIImage, Never>) in
+            Task {
+                await cache.requestUIImage(for: self, targetSize: targetSize) { result in
+                    if let result = result {
+                        if !result.isLowerQuality {
+                            continuation.resume(returning: result.image!)
+                        }
+                    }
+                }
+            }
+
+        })
+    }
+
 }
 
 extension PHObject: Identifiable {

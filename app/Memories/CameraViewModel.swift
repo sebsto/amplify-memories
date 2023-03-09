@@ -9,14 +9,22 @@ import AVFoundation
 import SwiftUI
 import os.log
 
-final class AddMemoryViewModel: ObservableObject {
+// MARK: Camera and Photo gallery support
+final class CameraViewModel: ObservableObject {
+    
+    enum PhotoState {
+        case noPhotoSelected
+        case photoSelected(UIImage)
+        case uploading
+    }
+    @Published var photoState: PhotoState = .noPhotoSelected
+    
     let camera = Camera()
     let photoCollection = PhotoCollection(smartAlbum: .smartAlbumUserLibrary)
     
     @Published var viewfinderImage: Image?
     @Published var thumbnailImage: Image?
-    
-    var isPhotosLoaded = false
+    @Published var isPhotosLoaded = false
     
     init() {
         Task {
@@ -88,7 +96,7 @@ final class AddMemoryViewModel: ObservableObject {
             return
         }
         
-        Task {
+        Task { @MainActor in
             do {
                 try await self.photoCollection.load()
                 await self.loadThumbnail()
@@ -108,6 +116,10 @@ final class AddMemoryViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    func selectedImage(image: UIImage) {
+        self.photoState = .photoSelected(image)
     }
 }
 

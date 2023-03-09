@@ -3,11 +3,12 @@ type MemoryData @model
 
   owner: String! @primaryKey(sortKeyFields: ["moment"])
   moment: String!
+  year: String!
   description: String
   image: String!
   star: Int!
   favourite: Boolean!
-  coordinates: CoordinateData!
+  coordinates: CoordinateData
 }
 
 type CoordinateData {

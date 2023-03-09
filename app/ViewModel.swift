@@ -14,36 +14,37 @@ import Logging
 //
 
 
-extension ContentView {
-    @MainActor
-    final class ViewModel: ObservableObject {
-        
-        enum AppState {
-            case signedOut
-            case loading
-            case dataAvailable([Memory])
-            case error(Error)
-        }
-        
-        // Global application state
-        @Published var state : AppState = .signedOut
-        
-        // main data structure
-        var memories : [Memory] = []
-        
-        // services
-        private var logger = Logger(label: "\(PACKAGE_NAME).ViewModel")
-        private var backend = Backend.shared
-        public init() {
+@MainActor
+final class ViewModel: ObservableObject {
+    
+    enum AppState {
+        case signedOut
+        case loading
+        case dataAvailable
+        case error(Error)
+    }
+    
+    // Global application state
+    @Published var state: AppState = .signedOut
+    @Published var tabSelected: Int = 0
+    
+    // main data structure
+    var memories : [Memory]
+    
+    // services
+    private var logger = Logger(label: "\(PACKAGE_NAME).ViewModel")
+    private var backend = Backend.shared
+    public init(memories : [Memory] = []) {
 #if DEBUG
-            self.logger.logLevel = .debug
+        self.logger.logLevel = .debug
 #endif
-        }
+        self.memories = memories
     }
 }
 
+
 // MARK: Signin with Apple functions
-extension ContentView.ViewModel {
+extension ViewModel {
     
     func configureRequest(_ request: ASAuthorizationAppleIDRequest) {
         request.requestedScopes = [.fullName, .email]
@@ -73,7 +74,7 @@ extension ContentView.ViewModel {
 }
 
 // MARK: Backend authentication-related functions
-extension ContentView.ViewModel {
+extension ViewModel {
     public func getInitialAuthStatus() async throws {
         
         // when running swift UI preview - do not change isSignedIn flag
@@ -116,23 +117,65 @@ extension ContentView.ViewModel {
 }
 
 // MARK: Model CRUD functions
-extension ContentView.ViewModel {
+extension ViewModel {
     
     func todaysMemories() async  {
         do {
             let result = try await self.backend.todayMemories()
-            self.state = .dataAvailable(result)
+            self.memories = result.sorted{ $0.moment > $1.moment }
+            self.state = .dataAvailable
         } catch {
             logger.error("Can not fetch the memories : \(error)")
         }
     }
     
-    func createMemory() async {
+    func createMemory(description: String, image: UIImage, coordinates: Coordinates?) async {
+        
         do {
-            try await self.backend.createMemory()
+            // save the image on a background thread
+            let imageName = UUID().uuidString
+            if let data = image.resize(to: 0.10).pngData() {
+                Task {
+                    await self.backend.storeImage(name: imageName,
+                                                  image: data)
+                }
+            }
+
+            // save the memory on a background thread
+            let user = try await self.backend.currentUser()
+            let memory = Memory(owner: user.userId,
+                            moment: Date.now,
+                            description: description,
+                            image: imageName,
+                            coordinate: coordinates)
+            self.memories.append(memory)
+            self.tabSelected = 0 // 0 to switch to today's view
+            self.state = .dataAvailable
+
+            Task {
+                try await self.backend.createMemory(memory)
+            }
+            
         } catch {
             logger.error("Can not create memory : \(error)")
         }
+        
+    }
+    
+    func imageURL(for memory: Memory) async -> URL? {
+        var result : URL?
+        
+        // mocked data have image name like "landscape1.png"
+        // real data have image name like "400E3677-3670-46EF-95E6-586918C1439A"
+        let split = memory.image.split(separator: ".")
+        if split.count == 2 && split[1] == "png" {
+            logger.debug("Mocked data, going to return URL for \(split)")
+            result = Bundle.main.url(forResource: String(split[0]), withExtension: String(split[1]))
+        } else {
+            logger.debug("Real data, computing URL")
+            result = await self.backend.imageURL(name: memory.image)
+        }
+        return result
     }
     
     func updateMemory(_ memory : Memory, favourite: Bool, star: Int) -> Memory {
@@ -144,6 +187,11 @@ extension ContentView.ViewModel {
             updatedMemory.star(count: 0)
         }
         updatedMemory.favourite = favourite
+        
+        //async save to the database
+        Task {
+            try await self.backend.updateMemory(updatedMemory)
+        }
         
         return updatedMemory
     }
@@ -184,6 +232,33 @@ struct UserData {
         Email:       \(self.email)
         Token:       \(self.token?.prefix(6) ?? "nil")
 """
+    }
+}
+
+extension UIImage {
+    
+    func resize(to percentage: Float) -> UIImage {
+        let newSize = CGSize(width: size.width * CGFloat(percentage),
+                             height: size.height * CGFloat(percentage))
+        return resize(to: newSize)
+    }
+
+    func resize(to newSize: CGSize) -> UIImage {
+        return UIGraphicsImageRenderer(size: newSize).image { _ in
+            let hScale = newSize.height / size.height
+            let vScale = newSize.width / size.width
+            let scale = max(hScale, vScale) // scaleToFill
+            let resizeSize = CGSize(width: size.width*scale, height: size.height*scale)
+            var middle = CGPoint.zero
+            if resizeSize.width > newSize.width {
+                middle.x -= (resizeSize.width-newSize.width)/2.0
+            }
+            if resizeSize.height > newSize.height {
+                middle.y -= (resizeSize.height-newSize.height)/2.0
+            }
+            
+            draw(in: CGRect(origin: middle, size: resizeSize))
+        }
     }
 }
 

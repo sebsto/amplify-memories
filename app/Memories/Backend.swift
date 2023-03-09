@@ -11,8 +11,9 @@ import Logging
 import Amplify
 import AWSCognitoAuthPlugin
 import AWSAPIPlugin
-import ClientRuntime // to control verbosity of AWS SDK
+import AWSS3StoragePlugin
 
+import ClientRuntime // to control verbosity of AWS SDK
 
 struct Backend {
     
@@ -36,6 +37,7 @@ struct Backend {
         do {
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
             try Amplify.add(plugin: AWSAPIPlugin(modelRegistration: AmplifyModels()))
+            try Amplify.add(plugin: AWSS3StoragePlugin())
             try Amplify.configure()
             logger.debug("Successfully configured Amplify")
         } catch {
@@ -167,40 +169,110 @@ extension Backend {
         
     }
     
+    func currentUser() async throws -> AuthUser {
+        return try await Amplify.Auth.getCurrentUser()
+    }
+    
     fileprivate func randomString(length: Int) -> String {
       let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-§&@.:/%£$*€#éèçàù"
       return String((0..<length).map{ _ in letters.randomElement()! })
     }
 }
 
-// MARK: Data CRUD functions
+// MARK: MemoryData CRUD functions
 extension Backend {
     
+    // return today's memories for current user
     func todayMemories() async throws -> [Memory] {
-        return Memory.mock
+        let user = try await self.currentUser()
+        let apiResult = try await Amplify.API.query(request: .getTodayMemory(owner: user.userId))
+//        let apiResult = try await Amplify.API.query(request: .list(MemoryData.self))
+
+        var result = [Memory]()
+        
+        switch apiResult {
+        case .success(let memoryData):
+            if let data = memoryData["items"] {
+                result = data.compactMap{ Memory(from: $0) }
+            }
+//            result = memoryData.compactMap{ Memory(from: $0) }.todayInHistory()
+            
+        case .failure(let error):
+            logger.error("Failed to retrieve today's memories.\n\(error)")
+        }
+        
+        return result
     }
     
-    func createMemory() async throws {
+    // save the memory
+    func createMemory(_ memory: Memory) async throws {
         
-        let user = try await Amplify.Auth.getCurrentUser()
-        
-        let coordinate = Memory.mockCoordinates()
-        let coordinateData = CoordinateData(longitude: coordinate.longitude, latitude: coordinate.latitude)
-        let memory = MemoryData(owner: user.userId,
-                                moment: "20220228204500",
-                                description: "description",
-                                image: "",
-                                star:5,
-                                favourite: true,
-                                coordinates: coordinateData)
-        
-        let result = try await Amplify.API.mutate(request: .create(memory))
+        let result = try await Amplify.API.mutate(request: .create(memory.data))
         switch result {
         case .success(let memory):
             logger.debug("Successfully created the memory: \(memory)")
         case .failure(let graphQLError):
             logger.error("Failed to create the memory \(graphQLError)")
             throw graphQLError
+        }
+    }
+
+    // update the memory
+    func updateMemory(_ memory: Memory) async throws {
+        let result = try await Amplify.API.mutate(request: .update(memory.data))
+        switch result {
+        case .success(let memory):
+            logger.debug("Successfully updated the memory: \(memory)")
+        case .failure(let graphQLError):
+            logger.error("Failed to update the memory \(graphQLError)")
+            throw graphQLError
+        }
+    }
+}
+
+// MARK: Image Access
+extension Backend {
+    
+    func storeImage(name: String, image: Data) async {
+        
+        do {
+            let options = StorageUploadDataRequest.Options(accessLevel: .private)
+            let task = Amplify.Storage.uploadData(key: name, data: image, options: options)
+            let result = try await task.value
+            logger.debug("Image upload completed: \(result)")
+            
+        } catch let error as StorageError {
+            logger.error("Can not upload image \(name): \(error.errorDescription). \(error.recoverySuggestion)")
+        } catch {
+            logger.error("Unknown error when uploading image \(name): \(error)")
+        }
+    }
+    
+    func imageURL(name: String) async -> URL? {
+        
+        var result: URL? = nil
+        do {
+            let options = StorageGetURLRequest.Options(accessLevel: .private)
+            result = try await Amplify.Storage.getURL(key: name, options: options)
+            
+        } catch let error as StorageError {
+            logger.error("Can not retrieve URL for image \(name): \(error.errorDescription). \(error.recoverySuggestion)")
+        } catch {
+            logger.error("Unknown error when retrieving URL for image \(name): \(error)")
+        }
+        return result
+    }
+    
+    func deleteImage(name: String) async {
+        
+        do {
+            let options = StorageRemoveRequest.Options(accessLevel: .private)
+            let result = try await Amplify.Storage.remove(key: name, options: options)
+            logger.debug("Image \(name) deleted (result: \(result)")
+        } catch let error as StorageError {
+            logger.error("Can not delete image \(name): \(error.errorDescription). \(error.recoverySuggestion)")
+        } catch {
+            logger.error("Unknown error when deleting image \(name): \(error)")
         }
     }
 }

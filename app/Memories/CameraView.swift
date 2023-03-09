@@ -1,104 +1,77 @@
 /*
-See the License.txt file for this sample’s licensing information.
-*/
+ See the License.txt file for this sample’s licensing information.
+ */
 
 import SwiftUI
 
 struct CameraView: View {
-    @StateObject private var model = AddMemoryViewModel()
- 
-    private static let barHeightFactor = 0.15
-    
+    @EnvironmentObject var mainModel: ViewModel // to access backend functions
+    @EnvironmentObject var cameraModel: CameraViewModel
     
     var body: some View {
         
-        NavigationStack {
-            GeometryReader { geometry in
-                ViewfinderView(image:  $model.viewfinderImage )
-                    .overlay(alignment: .top) {
-                        Color.black
-                            .opacity(0.75)
-                            .frame(height: geometry.size.height * Self.barHeightFactor)
-                    }
-                    .overlay(alignment: .bottom) {
-                        buttonsView()
-                            .frame(height: geometry.size.height * Self.barHeightFactor)
-                            .background(.black.opacity(0.75))
-                    }
-                    .overlay(alignment: .center)  {
-                        Color.clear
-                            .frame(height: geometry.size.height * (1 - (Self.barHeightFactor * 2)))
-                            .accessibilityElement()
-                            .accessibilityLabel("View Finder")
-                            .accessibilityAddTraits([.isImage])
-                    }
+        switch cameraModel.photoState {
+        case .noPhotoSelected:
+            VStack(alignment: .trailing, spacing: 0.0) {
+                ViewfinderView(image:  $cameraModel.viewfinderImage )
                     .background(.black)
+                buttonsView()
+                    .background(.black.opacity(0.75))
+                if cameraModel.isPhotosLoaded {
+                    PhotoCollectionView(photoCollection: cameraModel.photoCollection)
+                }
             }
             .task {
-                await model.camera.start()
-                await model.loadPhotos()
-                await model.loadThumbnail()
+                await cameraModel.camera.start()
+                await cameraModel.loadPhotos()
             }
-            .navigationTitle("Camera")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationBarHidden(true)
-//            .ignoresSafeArea()
-            .statusBar(hidden: true)
+            
+        case .photoSelected(let image):
+            AddMemoryView(image: image)
+            
+        case .uploading:
+            ProgressView {
+                Text("Uploading image and creating your memory")
+            }
         }
     }
-    
-    private func buttonsView() -> some View {
-        HStack(spacing: 60) {
-            
-            Spacer()
-            
-            NavigationLink {
-                PhotoCollectionView(photoCollection: model.photoCollection)
-                    .onAppear {
-                        model.camera.isPreviewPaused = true
-                    }
-                    .onDisappear {
-                        model.camera.isPreviewPaused = false
-                    }
-            } label: {
-                Label {
-                    Text("Gallery")
-                } icon: {
-                    ThumbnailView(image: model.thumbnailImage)
-                }
-            }
-            
-            Button {
-                model.camera.takePhoto()
-            } label: {
-                Label {
-                    Text("Take Photo")
-                } icon: {
-                    ZStack {
-                        Circle()
-                            .strokeBorder(.white, lineWidth: 3)
-                            .frame(width: 62, height: 62)
-                        Circle()
-                            .fill(.white)
-                            .frame(width: 50, height: 50)
-                    }
-                }
-            }
-            
-            Button {
-                model.camera.switchCaptureDevice()
-            } label: {
-                Label("Switch Camera", systemImage: "arrow.triangle.2.circlepath")
-                    .font(.system(size: 36, weight: .bold))
-                    .foregroundColor(.white)
-            }
-            
-            Spacer()
         
+        private func buttonsView() -> some View {
+            HStack(spacing: 60) {
+                
+                Spacer()
+                
+                Button {
+                    cameraModel.camera.takePhoto()
+                } label: {
+                    Label {
+                        Text("Take Photo")
+                    } icon: {
+                        ZStack {
+                            Circle()
+                                .strokeBorder(.white, lineWidth: 3)
+                                .frame(width: 62, height: 62)
+                            Circle()
+                                .fill(.white)
+                                .frame(width: 50, height: 50)
+                        }
+                    }
+                }
+                
+                Button {
+                    cameraModel.camera.switchCaptureDevice()
+                } label: {
+                    Label("Switch Camera", systemImage: "arrow.triangle.2.circlepath")
+                        .font(.system(size: 36, weight: .bold))
+                        .foregroundColor(.white)
+                }
+                
+                Spacer()
+                
+            }
+            .buttonStyle(.plain)
+            .labelStyle(.iconOnly)
+            .padding()
         }
-        .buttonStyle(.plain)
-        .labelStyle(.iconOnly)
-        .padding()
+        
     }
-    
-}

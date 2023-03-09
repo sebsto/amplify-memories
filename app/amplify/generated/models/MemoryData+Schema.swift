@@ -7,6 +7,7 @@ extension MemoryData {
    public enum CodingKeys: String, ModelKey {
     case owner
     case moment
+    case year
     case description
     case image
     case star
@@ -36,11 +37,12 @@ extension MemoryData {
     model.fields(
       .field(memoryData.owner, is: .required, ofType: .string),
       .field(memoryData.moment, is: .required, ofType: .string),
+      .field(memoryData.year, is: .required, ofType: .string),
       .field(memoryData.description, is: .optional, ofType: .string),
       .field(memoryData.image, is: .required, ofType: .string),
       .field(memoryData.star, is: .required, ofType: .int),
       .field(memoryData.favourite, is: .required, ofType: .bool),
-      .field(memoryData.coordinates, is: .required, ofType: .embedded(type: CoordinateData.self)),
+      .field(memoryData.coordinates, is: .optional, ofType: .embedded(type: CoordinateData.self)),
       .field(memoryData.createdAt, is: .optional, isReadOnly: true, ofType: .dateTime),
       .field(memoryData.updatedAt, is: .optional, isReadOnly: true, ofType: .dateTime)
     )

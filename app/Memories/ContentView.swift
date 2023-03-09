@@ -30,8 +30,8 @@ struct ContentView: View {
                         await self.model.todaysMemories()
                     }
                 
-            case .dataAvailable(let memories):
-                MainView(memories: memories)
+            case .dataAvailable:
+                MainView()
                 
             case .error(let error):
                 Text("An unknown error happened: \(error.localizedDescription)")
@@ -54,7 +54,6 @@ struct ContentView: View {
     @ViewBuilder
     func unauthenticatedView() -> some View {
         ZStack {
-            
             AsyncImage(url: splashImageURL) { image in
                 image
                     .resizable()
@@ -93,15 +92,9 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        
-        let memories = Memory.mock
-        let model = ContentView.ViewModel()
         let cv = ContentView()
-        let _ = cv.environmentObject(model)
-
         return Group {
             cv.unauthenticatedView()
-            MainView(memories: memories)
         }
     }
 }

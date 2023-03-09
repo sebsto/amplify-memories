@@ -9,15 +9,16 @@ import SwiftUI
 
 struct MemoryCondensedView: View {
     
-    @EnvironmentObject private var model: ContentView.ViewModel
+    @EnvironmentObject private var model: ViewModel
     
     // do not use the whole memory as State to avoid image flicker on rendering changes
     @State var memory : Memory
+    @State var imageURL : URL? = nil// asynchronous property to retrieve the image URL
     
     var body: some View {
         VStack(alignment: .leading) {
             
-            AsyncImage(url: memory.imageURL) { image in
+            AsyncImage(url: self.imageURL) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -25,6 +26,11 @@ struct MemoryCondensedView: View {
                 ProgressView()
                     .frame(maxWidth: .infinity)
                     .padding(.bottom)
+            }
+            .onAppear {
+                Task {
+                    self.imageURL = await model.imageURL(for: memory)
+                }
             }
             
             HStack {
@@ -96,7 +102,7 @@ struct FavouriteView: View {
 struct MemoryCondensedViewr_Previews: PreviewProvider {
     static var previews: some View {
         let memory = Memory.mock[Int.random(in: 0...Memory.mock.count)]
-        let model = ContentView.ViewModel()
+        let model = ViewModel()
         MemoryCondensedView(memory: memory).environmentObject(model)
     }
 }

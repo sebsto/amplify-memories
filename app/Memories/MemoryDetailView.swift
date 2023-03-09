@@ -11,7 +11,7 @@ import MapKit
 
 struct MemoryDetailView: View {
     
-    @EnvironmentObject private var model: ContentView.ViewModel
+    @EnvironmentObject private var model: ViewModel
     @State var memory : Memory
     @State var region : MKCoordinateRegion
     
@@ -19,11 +19,14 @@ struct MemoryDetailView: View {
         
         _memory = State(initialValue: memory)
         
-        let coordinate = CLLocationCoordinate2D(latitude: memory.coordinates.latitude,
-                                                longitude: memory.coordinates.longitude)
+        var coordinate: CLLocationCoordinate2D = LocationManager.defaultLocation
+        if let mc = memory.coordinates {
+            coordinate = CLLocationCoordinate2D(latitude: mc.latitude,
+                                                    longitude: mc.longitude)
+        }
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         _region = State(initialValue: MKCoordinateRegion(center: coordinate,
-                                                         span: span))
+                                                             span: span))
     }
     
     var body: some View {
@@ -49,11 +52,13 @@ struct MemoryDetailView: View {
                     .font(.subheadline)
                     .padding([.bottom])
                 
-                Map(coordinateRegion: $region, annotationItems: [memory]) { memory in
-                    MapMarker(coordinate: memory.locationCoordinate)
+                if memory.coordinates != nil {
+                    Map(coordinateRegion: $region, annotationItems: [memory]) { memory in
+                        MapMarker(coordinate: memory.locationCoordinate!)
+                    }
+                    .frame(height: 400)
+                    .padding(.top)
                 }
-                .frame(height: 400)
-                .padding(.top)
                 
             } // Vstack
         } // ScrollView

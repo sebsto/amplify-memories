@@ -20,14 +20,14 @@ import Logging
 struct MapView: View {
     
     let memories: [Memory]
-    @ObservedObject var locationManager: LocationManager = LocationManager()
+    @ObservedObject var locationManager: LocationManager = .shared
 
     init(memories: [Memory]) {
-        
-        self.memories = memories
+        // only show memories that have a coordinate
+        self.memories = memories.filter { return $0.coordinates != nil }
     }
     
-    // workwround to SwiftUI warning from
+    // workaround to SwiftUI warning from
     // Xcode 14: Publishing changes from within view updates
     // https://developer.apple.com/forums/thread/711899?answerId=732977022#732977022
     
@@ -48,8 +48,9 @@ struct MapView: View {
                 annotationItems: memories)
             { memory in
 //                MapMarker(coordinate: memory.locationCoordinate)
-                MapAnnotation(coordinate: memory.locationCoordinate) {
 //                    Text("Hello")
+
+                MapAnnotation(coordinate: memory.locationCoordinate!) {
                     MapMarkerPhotoView(memory: memory)
                 }
             }
@@ -61,34 +62,45 @@ struct MapView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarHidden(true)
-            .ignoresSafeArea()
-//            .edgesIgnoringSafeArea(.top)
         }
     }
 }
 
 struct MapMarkerPhotoView: View {
 
+    @EnvironmentObject private var model: ViewModel
+
     var memory: Memory
+    @State var imageURL: URL?
+
     var body: some View {
         NavigationLink(destination: MemoryDetailView(memory: memory)){
             VStack(spacing: 0) {
-                AsyncImage(url: memory.imageURL) { image in
+                AsyncImage(url: self.imageURL) { image in
                     image
                         .resizable()
                         .frame(width: 50, height: 50)
                         .clipShape(Circle())
+                        .overlay(Circle().stroke(Color.accentColor, lineWidth: 4))
+
                 } placeholder: {
                     ProgressView()
                         .frame(maxWidth: .infinity)
                         .padding(.bottom)
                 }
+
                 Text(memory.yearsAgo())
                     .padding(5)
                     .font(.subheadline)
                     .background(.white.opacity(0.5), in: Capsule())
             }
+            .onAppear {
+                Task {
+                    self.imageURL = await model.imageURL(for: memory)
+                }
+            }
         }
+
     }
 }
 
@@ -97,75 +109,7 @@ struct MapView_Previews: PreviewProvider {
         
         let memories = Memory.mock
         
-        MapView(memories: memories)
+        MapView(memories: memories).environmentObject(ViewModel())
 //        MapMarkerPhotoView(memory: memories[1])
     }
 }
-
-class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    
-    static let defaultLocation = CLLocationCoordinate2D(latitude: 50.6292,
-                                                        longitude: 3.0573)
-    
-    private var logger = Logger(label: "\(PACKAGE_NAME).LocationManager")
-    
-    private var manager: CLLocationManager? = nil
-    
-    @Published var location: CLLocationCoordinate2D?
-    @Published var region : MKCoordinateRegion = .init(
-        center: LocationManager.defaultLocation,
-        span: MKCoordinateSpan(latitudeDelta: 0.3, longitudeDelta: 0.3)
-    )
-    
-    override init() {
-        super.init()
-        
-#if DEBUG
-        self.logger.logLevel = .debug
-#endif
-    }
-    
-    func startUpdatingLocation() {
-        if manager == nil {
-            manager = CLLocationManager()
-            manager!.delegate = self
-            manager!.desiredAccuracy = kCLLocationAccuracyBest
-            manager!.requestWhenInUseAuthorization()
-        }
-    }
-    
-    func stopUpdatingLocation() {
-        manager?.stopUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        logger.error("[didUpdateLocations] \(error)")
-    }
-    
-    func locationManager(_ manager: CLLocationManager,
-                         didUpdateLocations locations: [CLLocation]) {
-        
-        logger.debug("[didUpdateLocations] received location update: \(locations)")
-        if let l = locations.last {
-            location = l.coordinate
-            
-            region = MKCoordinateRegion(center: l.coordinate,
-                                        span: MKCoordinateSpan(latitudeDelta: 0.3,
-                                                               longitudeDelta: 0.3))
-        }
-        
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        
-        if manager.authorizationStatus == .authorizedWhenInUse{
-            logger.debug("[didUpdateLocations] Authorized")
-            manager.startUpdatingLocation()
-        } else {
-            logger.debug("[didUpdateLocations] Not authorized")
-            manager.requestWhenInUseAuthorization()
-        }
-    }
-    
-}
-

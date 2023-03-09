@@ -19,6 +19,9 @@
       },
       "api": {
         "memories": {}
+      },
+      "storage": {
+        "image": {}
       }
     }
   }

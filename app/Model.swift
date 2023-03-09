@@ -9,8 +9,6 @@ import Foundation
 import Logging
 import CoreLocation
 
-import Collections
-
 struct Memory: Identifiable {
     
     private var logger = Logger(label: "\(PACKAGE_NAME).Memory")
@@ -24,8 +22,7 @@ struct Memory: Identifiable {
     public let image: String
     public var star: Int
     public var favourite: Bool
-    public let coordinates: Coordinates
-    public let imageURL: URL?
+    public let coordinates: Coordinates?
     
     init(owner: String,
          moment: Date = .now,
@@ -33,7 +30,7 @@ struct Memory: Identifiable {
          image: String,
          star: Int = 0,
          favourite: Bool = false,
-         coordinate: Coordinates) {
+         coordinate: Coordinates?) {
 #if DEBUG
         self.logger.logLevel = .debug
 #endif
@@ -46,27 +43,8 @@ struct Memory: Identifiable {
         self.star = star
         self.favourite = favourite
         self.coordinates = coordinate
-        
-        self.imageURL = Memory.computeImageURL(for: image, with: logger)
     }
     
-    private static func computeImageURL(for image: String, with logger: Logger) -> URL? {
-                
-        var result : URL?
-        
-        // mocked data have image name like "landscape1.png"
-        // real data have image name like "400E3677-3670-46EF-95E6-586918C1439A"
-        let split = image.split(separator: ".")
-        if split.count == 2 && split[1] == "png" {
-            logger.debug("Mocked data, going to return URL for \(split)")
-            result = Bundle.main.url(forResource: String(split[0]), withExtension: String(split[1]))
-        } else {
-            logger.debug("Real data, computing URL")
-            result = nil
-        }
-        return result
-    }
-
     mutating func star(count: Int) {
         guard validStarRange ~= count else {
             return
@@ -84,16 +62,22 @@ struct Memory: Identifiable {
     static func yearsAgo(_ year: Int) -> String {
         let thisYear = Calendar.current.component(.year, from: .now)
         let elapsed = thisYear - year
-        return "\(elapsed) \(elapsed > 1 ? "years" : "year") ago"
+        if elapsed == 0 {
+            return "Today"
+        } else {
+            return "\(elapsed) \(elapsed > 1 ? "years" : "year") ago"
+        }
     }
     func yearsAgo() -> String {
         return Memory.yearsAgo(self.year)
     }
 
-    var locationCoordinate: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(
-            latitude: coordinates.latitude,
-            longitude: coordinates.longitude)
+    var locationCoordinate: CLLocationCoordinate2D? {
+        if let coordinates {
+            return CLLocationCoordinate2D(
+                latitude: coordinates.latitude,
+                longitude: coordinates.longitude)
+        } else { return nil }
     }
 }
 
@@ -102,8 +86,11 @@ extension Memory {
     
     init(from: MemoryData) {
         
-        if let date = from.moment.toDate() {
-            let coordinates = Coordinates(from: from.coordinates)
+        if let date = "\(from.year)\(from.moment)".toDate() {
+            var coordinates: Coordinates? = nil
+            if let cd = from.coordinates {
+                coordinates = Coordinates(from: cd)
+            }
             self.init(owner: from.owner,
                       moment: date,
                       description: from.description ?? "",
@@ -117,10 +104,15 @@ extension Memory {
     }
     
     var data: MemoryData {
-        let cd = CoordinateData(longitude: self.coordinates.longitude,
-                                latitude: self.coordinates.latitude)
+        var cd: CoordinateData? = nil
+        if let coordinates = self.coordinates {
+            cd = CoordinateData(longitude: coordinates.longitude,
+                                    latitude: coordinates.latitude)
+        }
         return MemoryData(owner: self.owner,
-                          moment: self.moment,
+                          moment: String(self.moment.suffix(10)),
+                          year: String(self.moment.prefix(4)),
+                          description: self.description,
                           image: self.image,
                           star: self.star,
                           favourite: self.favourite,
@@ -145,27 +137,6 @@ extension String {
         return displayFormatter.date(from: self)
     }
 }
-
-//extension Array<Memory> {
-//    func groupByYears() -> OrderedDictionary<Int, [Memory]> {//[Int:[Memory]] {
-//
-//        var result : OrderedDictionary<Int, [Memory]> = [:]
-//        // group all memories per year.
-//        // result is [ "2023" : [m1, m3], "2022" : [m2] ]
-//        for m in self {
-//
-//            let year = m.year
-//            if result.keys.contains(year) {
-//                var memories = result[year]!
-//                memories.append(m)
-//                result[year] = memories
-//            } else {
-//                result[year] = [m]
-//            }
-//        }
-//        return result
-//    }
-//}
 
 // MARK: functions to support filtering and grouping of memories
 // this is used bu the GUI for presentation purposes
@@ -198,7 +169,18 @@ extension Array<Memory> {
     }
 }
 
+//extension Array<Memory> {
+//    func todayInHistory() -> [Memory] {
+//        let now = Date.now
+//        let thisMonth = Calendar.current.component(.month, from: now)
+//        let thisDay = Calendar.current.component(.day, from: now)
+//        let suffix = String(format: "%02d%02d", thisMonth, thisDay)
+//
+//        return self.filter{ $0.moment.prefix(8).hasSuffix(suffix) }
+//    }
+//}
 
+// MARK: geographic coordinates support
 struct Coordinates: Hashable, Codable {
     init(from: CoordinateData) {
         self.longitude = from.longitude
@@ -210,4 +192,10 @@ struct Coordinates: Hashable, Codable {
     }
     var latitude: Double
     var longitude: Double
+}
+
+extension CLLocationCoordinate2D {
+    func coordinates() -> Coordinates {
+        return Coordinates(latitude: self.latitude, longitude: self.longitude)
+    }
 }

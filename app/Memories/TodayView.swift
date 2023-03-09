@@ -3,17 +3,17 @@ import SwiftUI
 
 struct TodayView: View {
     
-    @EnvironmentObject private var model: ContentView.ViewModel
+    @EnvironmentObject private var model: ViewModel
     
     @Namespace var top
     
-    @State public var memories: [Memory]
     @State private var offset = CGFloat.zero
     
     var body: some View {
         
+        let memories = model.memories
+        
         NavigationStack {
-            
             ScrollViewReader { proxy in
                 ScrollView {
                     
@@ -42,10 +42,7 @@ struct TodayView: View {
             
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarHidden(true)
-            .navigationSplitViewStyle(.balanced)
-//            .ignoresSafeArea()
-            .edgesIgnoringSafeArea([.top])
-            
+            .navigationSplitViewStyle(.balanced)            
         } // NavigationView
     }
     
@@ -55,7 +52,7 @@ struct TodayView: View {
     func headerView() -> some View {
         // make the header view scale out when user scrolls up
         GeometryReader { geo in
-            
+
             let geoMinY = geo.frame(in: .global).minY
             let geoMaxY = geo.frame(in: .global).maxY
             let minY = geoMinY > 0 ? geoMinY : 0
@@ -75,10 +72,13 @@ struct TodayView: View {
     @ViewBuilder
     func groupYear(_ year: Int) -> some View {
         Group {
-            Text("A day like today")
-                .bold()
-                .foregroundColor(.gray)
-            Text(String(Memory.yearsAgo(year)))
+            let yearsAgo = Memory.yearsAgo(year)
+            if yearsAgo != "Today" {
+                Text("A day like today")
+                    .bold()
+                    .foregroundColor(.gray)
+            }
+            Text(String(yearsAgo))
                 .font(.title)
                 .bold()
         }
@@ -87,9 +87,15 @@ struct TodayView: View {
     
     @ViewBuilder
     func bottomView(_ proxy: ScrollViewProxy) -> some View {
-        Text("🎉That's all for today!🎉")
-            .font(.title)
-            .padding([.top, .bottom])
+        if self.model.memories.count > 0 {
+            Text("🎉That's all for today!🎉")
+                .font(.title)
+                .padding([.top, .bottom])
+        } else {
+            Text("No recorded memory for today")
+                .font(.title3)
+                .padding([.top, .bottom])
+        }
         Text("Come back tomorrow for more memories")
             .font(.headline)
             .foregroundColor(.gray)
@@ -119,8 +125,8 @@ struct TodayView: View {
 
 struct TodayView_Previews: PreviewProvider {
     static var previews: some View {
-        let memories = Memory.mock
-        let model = ContentView.ViewModel()
-        TodayView(memories: memories).environmentObject(model)
+        let model = ViewModel(memories: Memory.mock)
+//        let model = ViewModel(memories: [])
+        TodayView().environmentObject(model)
     }
 }

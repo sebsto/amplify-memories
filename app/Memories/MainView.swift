@@ -9,22 +9,22 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State public var memories: [Memory]
-    @State private var tabSelected = 0
-    
+    @EnvironmentObject private var model: ViewModel
+            
     var body: some View {
-        TabView(selection: $tabSelected) {
-            TodayView(memories: memories)
+        TabView(selection: $model.tabSelected) {
+            TodayView()
                 .tabItem {
                     Label("Today", systemImage:"list.bullet")
                 }
                 .tag(0)
-            AddMemoryView()
+            CameraView()
+                .environmentObject(CameraViewModel())
                 .tabItem {
                     Label("Add", systemImage:"plus.square")
                 }
                 .tag(1)
-            MapView(memories: memories)
+            MapView(memories: model.memories)
                 .tabItem {
                     Label("Map", systemImage:"map")
                 }
@@ -35,7 +35,7 @@ struct MainView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        let memories = Memory.mock
-        MainView(memories: memories)
+        let model = ViewModel(memories: Memory.mock)
+        MainView().environmentObject(model)
     }
 }
