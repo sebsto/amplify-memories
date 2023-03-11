@@ -186,7 +186,7 @@ extension Backend {
     func todayMemories() async throws -> [Memory] {
         let user = try await self.currentUser()
         let apiResult = try await Amplify.API.query(request: .getTodayMemory(owner: user.userId))
-//        let apiResult = try await Amplify.API.query(request: .list(MemoryData.self))
+    //        let apiResult = try await Amplify.API.query(request: .list(MemoryData.self))
 
         var result = [Memory]()
         
@@ -195,7 +195,7 @@ extension Backend {
             if let data = memoryData["items"] {
                 result = data.compactMap{ Memory(from: $0) }
             }
-//            result = memoryData.compactMap{ Memory(from: $0) }.todayInHistory()
+    //            result = memoryData.compactMap{ Memory(from: $0) }.todayInHistory()
             
         case .failure(let error):
             logger.error("Failed to retrieve today's memories.\n\(error)")
