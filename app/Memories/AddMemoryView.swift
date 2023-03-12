@@ -76,7 +76,7 @@ struct AddMemoryView: View {
             Button(action: {
                 if let image = self.image {
                     Task {
-                        self.cameraModel.photoState = .uploading
+                        self.cameraModel.state = .uploading
 
                         let coordinates: Coordinates? = self.locationManager.location?.coordinates()
                         
@@ -103,7 +103,7 @@ struct AddMemoryView: View {
                 .cornerRadius(30)
             }
             Button(action: {
-                self.cameraModel.photoState = .noPhotoSelected
+                self.cameraModel.state = .loadingPhoto
             }) {
                 HStack {
                     Image(systemName: "trash")

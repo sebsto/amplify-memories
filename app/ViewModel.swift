@@ -120,6 +120,7 @@ extension ViewModel {
 extension ViewModel {
     
     func todaysMemories() async  {
+        logger.debug("Loading today's memories")
         do {
             let result = try await self.backend.todayMemories()
             self.memories = result.sorted{ $0.moment > $1.moment }

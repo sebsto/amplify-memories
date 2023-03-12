@@ -10,22 +10,25 @@ import SwiftUI
 import os.log
 
 // MARK: Camera and Photo gallery support
+@MainActor
 final class CameraViewModel: ObservableObject {
     
     enum PhotoState {
-        case noPhotoSelected
+        case loadingPhoto
+        case albumLoaded
+        case capturePhoto
         case photoSelected(UIImage)
         case uploading
     }
-    @Published var photoState: PhotoState = .noPhotoSelected
+    @Published var state: PhotoState = .loadingPhoto
     
     let camera = Camera()
     let photoCollection = PhotoCollection(smartAlbum: .smartAlbumUserLibrary)
     
     @Published var viewfinderImage: Image?
-    @Published var thumbnailImage: Image?
-    @Published var isPhotosLoaded = false
-    
+    @Published var selectedImage: UIImage? // to display in photocollection view
+    @Published var selectedAsset: PhotoAsset? // for comparison in photocollection view
+
     init() {
         Task {
             await handleCameraPreviews()
@@ -49,12 +52,9 @@ final class CameraViewModel: ObservableObject {
     
     func handleCameraPhotos() async {
         let unpackedPhotoStream = camera.photoStream
-            .compactMap { self.unpackPhoto($0) }
+            .compactMap { await self.unpackPhoto($0) }
         
         for await photoData in unpackedPhotoStream {
-            Task { @MainActor in
-                thumbnailImage = photoData.thumbnailImage
-            }
             savePhoto(imageData: photoData.imageData)
         }
     }
@@ -80,6 +80,7 @@ final class CameraViewModel: ObservableObject {
         Task {
             do {
                 try await photoCollection.addImage(imageData)
+                await self.selectedImage(asset: photoCollection.photoAssets[0]) // refresh the UI
                 logger.debug("Added image data to photo collection.")
             } catch let error {
                 logger.error("Failed to add image to photo collection: \(error.localizedDescription)")
@@ -88,38 +89,40 @@ final class CameraViewModel: ObservableObject {
     }
     
     func loadPhotos() async {
-        guard !isPhotosLoaded else { return }
-        
         let authorized = await PhotoLibrary.checkAuthorization()
         guard authorized else {
             logger.error("Photo library access was not authorized.")
             return
         }
         
-        Task { @MainActor in
+        Task { 
             do {
                 try await self.photoCollection.load()
-                await self.loadThumbnail()
             } catch let error {
                 logger.error("Failed to load photo collection: \(error.localizedDescription)")
             }
-            self.isPhotosLoaded = true
+            await self.selectedImage(asset: self.photoCollection.photoAssets[0])
+            self.state = .albumLoaded
         }
     }
-    
-    func loadThumbnail() async {
-        guard let asset = photoCollection.photoAssets.first  else { return }
-        await photoCollection.cache.requestImage(for: asset, targetSize: CGSize(width: 256, height: 256))  { result in
-            if let result = result {
-                Task { @MainActor in
-                    self.thumbnailImage = result.image
-                }
-            }
+
+    func selectedImage(asset: PhotoAsset) async {
+        if let pha = asset.phAsset {
+            let pictureSize = CGSize(width: pha.pixelWidth,
+                                     height: pha.pixelHeight)
+            let image = await asset.uiImage(in: photoCollection.cache,
+                                            targetSize: pictureSize)
+            self.selectedImage = image
+            self.selectedAsset = asset // for comparison in photocollection view
+        } else {
+            fatalError("Asset has no phAsset")
         }
+
     }
     
-    func selectedImage(image: UIImage) {
-        self.photoState = .photoSelected(image)
+    func takePhoto() {
+        self.camera.takePhoto()
+        self.state = .albumLoaded
     }
 }
 

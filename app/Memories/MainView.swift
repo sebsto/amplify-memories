@@ -18,7 +18,7 @@ struct MainView: View {
                     Label("Today", systemImage:"list.bullet")
                 }
                 .tag(0)
-            CameraView()
+            PhotoSelectionView()
                 .environmentObject(CameraViewModel())
                 .tabItem {
                     Label("Add", systemImage:"plus.square")

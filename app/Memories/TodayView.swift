@@ -18,7 +18,7 @@ struct TodayView: View {
                 ScrollView {
                     
                     headerView()
-                    
+
                     LazyVStack {
                         ForEach(Array(memories.years()), id: \.self) { year in
                             groupYear(year)
@@ -38,11 +38,12 @@ struct TodayView: View {
                     bottomView(proxy)
                     
                 } // scrollview
+
             } // scrollviewreader
-            
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarHidden(true)
-            .navigationSplitViewStyle(.balanced)            
+            .navigationSplitViewStyle(.balanced)
+//            .ignoresSafeArea(edges: [.top])
         } // NavigationView
     }
     
@@ -57,15 +58,21 @@ struct TodayView: View {
             let geoMaxY = geo.frame(in: .global).maxY
             let minY = geoMinY > 0 ? geoMinY : 0
             let maxY = geoMaxY > 0 ? geoMaxY : 0
-            let scaleFactor = 2 * minY / maxY
+            let scaleFactor = (2 * minY / maxY) 
+//            let scaleFactor : CGFloat = geoMinY >= 0 ? 1 : 0
             
             Text("Today's memories")
+//            Text("\(geoMinY) x \(geoMaxY)")
                 .font(.largeTitle)
                 .bold()
+//                .foregroundColor(.white)
                 .frame(maxWidth: .infinity)
+//                .position(x:geo.frame(in: .global).midX, y:geo.frame(in: .global).midY + 10)
                 .scaleEffect(scaleFactor)
         }
         .frame(height: firstRowheight) // to ensure teh GeometryReader view has a min Height
+//        .background(.tint)
+
         .id(top)
     }
     
