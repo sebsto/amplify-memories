@@ -92,30 +92,30 @@ struct AddMemoryView: View {
             }) {
                 HStack {
                     Image(systemName: "square.and.arrow.down")
-                        .font(.title3)
+                        .font(.subheadline)
                     Text("Record")
                         .fontWeight(.semibold)
-                        .font(.title3)
+                        .font(.subheadline)
                 }
                 .padding()
                 .foregroundColor(.white)
                 .background(.tint)
-                .cornerRadius(30)
+                .cornerRadius(20)
             }
             Button(action: {
                 self.cameraModel.state = .loadingPhoto
             }) {
                 HStack {
                     Image(systemName: "trash")
-                        .font(.title3)
+                        .font(.subheadline)
                     Text("Cancel")
                         .fontWeight(.semibold)
-                        .font(.title3)
+                        .font(.subheadline)
                 }
                 .padding()
                 .foregroundColor(.white)
                 .background(.red)
-                .cornerRadius(30)
+                .cornerRadius(20)
             }
         }
     }

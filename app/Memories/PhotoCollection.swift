@@ -171,7 +171,7 @@ class PhotoCollection: NSObject, ObservableObject {
         }
     }
     
-    private func refreshPhotoAssets(_ fetchResult: PHFetchResult<PHAsset>? = nil) async {
+    func refreshPhotoAssets(_ fetchResult: PHFetchResult<PHAsset>? = nil) async {
 
         var newFetchResult = fetchResult
 

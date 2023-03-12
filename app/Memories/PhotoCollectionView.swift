@@ -47,6 +47,13 @@ struct PhotoCollectionView: View {
                         .onTapGesture {
                             self.cameraModel.state = .photoSelected(image)
                         }
+                } else {
+                    Image(systemName: "photo")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(.accentColor)
+                        .opacity(0.2)
+                        .frame(height: actualHeight / 2.4)
                 }
 
                 HStack {
@@ -65,7 +72,28 @@ struct PhotoCollectionView: View {
                     }
                     
                     Spacer()
-                    
+
+                    Button(action: {
+                        
+                        Task {
+                            // delete currently selected photo from photo album
+                            await self.cameraModel.selectedAsset?.delete()
+
+                            // refresh collection of photo
+                            await self.cameraModel.photoCollection.refreshPhotoAssets()
+
+                            // refresh selected images in UI
+                            self.cameraModel.selectedAsset = nil
+                            self.cameraModel.selectedImage = nil
+                        }
+                        
+                    }) {
+                        Image(systemName: "trash.circle")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width:30, height: 30)
+                    }
+
                     Button(action: {
                         
                         self.cameraModel.state = .capturePhoto

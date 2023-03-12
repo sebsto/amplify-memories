@@ -11,6 +11,7 @@ struct PhotoItemView: View {
     var imageSize: CGSize
     
     @State private var image: Image?
+    @State private var imageRequestID: PHImageRequestID?
 
     var body: some View {
         
@@ -27,7 +28,14 @@ struct PhotoItemView: View {
         .onAppear {
             Task {
                 guard image == nil, let cache = cache else { return }
-                self.image = await Image(uiImage: asset.uiImage(in: cache, targetSize: imageSize))
+//                self.image = await Image(uiImage: asset.uiImage(in: cache, targetSize: imageSize))
+                self.imageRequestID = await cache.requestImage(for: asset, targetSize: imageSize) { result in
+                    Task {
+                        if let result = result {
+                            self.image = result.image
+                        }
+                    }
+                }
             }
         }
     }
