@@ -222,14 +222,9 @@
 		000AA58529B7247E00030DFE /* photos */ = {
 			isa = PBXGroup;
 			children = (
+				007B2A9F29BE297A005FE8D5 /* model */,
 				00FFF65129BC825500A028F5 /* view */,
-				000AA59629B729C900030DFE /* CameraViewModel.swift */,
-				000AA58C29B724E900030DFE /* CachedImageManager.swift */,
-				000AA58E29B7251A00030DFE /* PhotoAsset.swift */,
-				000AA59429B7282F00030DFE /* Camera.swift */,
-				000AA58829B724B700030DFE /* PhotoAssetCollection.swift */,
-				000AA58629B724B700030DFE /* PhotoCollection.swift */,
-				000AA59829B72A1100030DFE /* PhotoLibrary.swift */,
+				007B2AA029BE298C005FE8D5 /* service */,
 			);
 			name = photos;
 			sourceTree = "<group>";
@@ -313,6 +308,27 @@
 				005A71FF29AE854500B4F197 /* awsconfiguration.json */,
 			);
 			name = "Amplify Configuration";
+			sourceTree = "<group>";
+		};
+		007B2A9F29BE297A005FE8D5 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				000AA59629B729C900030DFE /* CameraViewModel.swift */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+		007B2AA029BE298C005FE8D5 /* service */ = {
+			isa = PBXGroup;
+			children = (
+				000AA58C29B724E900030DFE /* CachedImageManager.swift */,
+				000AA58E29B7251A00030DFE /* PhotoAsset.swift */,
+				000AA59429B7282F00030DFE /* Camera.swift */,
+				000AA58829B724B700030DFE /* PhotoAssetCollection.swift */,
+				000AA58629B724B700030DFE /* PhotoCollection.swift */,
+				000AA59829B72A1100030DFE /* PhotoLibrary.swift */,
+			);
+			name = service;
 			sourceTree = "<group>";
 		};
 		007CF0AA29B0BE8A00FE5E52 /* Frameworks */ = {
