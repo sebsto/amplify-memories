@@ -127,6 +127,7 @@ extension ViewModel {
             self.state = .dataAvailable
         } catch {
             logger.error("Can not fetch the memories : \(error)")
+            self.state = .error(error)
         }
     }
     

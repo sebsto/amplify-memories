@@ -34,7 +34,11 @@ struct ContentView: View {
                 MainView()
                 
             case .error(let error):
-                Text("An unknown error happened: \(error.localizedDescription)")
+                VStack {
+                    Text("An error happened")
+                        .font(.subheadline)
+                    Text("\(error.localizedDescription)")
+                }
                 
             }
         }
@@ -92,9 +96,12 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let cv = ContentView()
+        let model = ViewModel()
+        model.state = .error(URLError(.fileDoesNotExist))
+        let cv = ContentView().environmentObject(model) as! ContentView
         return Group {
-            cv.unauthenticatedView()
+//            cv.unauthenticatedView()
+            cv
         }
     }
 }

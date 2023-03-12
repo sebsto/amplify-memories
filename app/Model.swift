@@ -169,17 +169,6 @@ extension Array<Memory> {
     }
 }
 
-//extension Array<Memory> {
-//    func todayInHistory() -> [Memory] {
-//        let now = Date.now
-//        let thisMonth = Calendar.current.component(.month, from: now)
-//        let thisDay = Calendar.current.component(.day, from: now)
-//        let suffix = String(format: "%02d%02d", thisMonth, thisDay)
-//
-//        return self.filter{ $0.moment.prefix(8).hasSuffix(suffix) }
-//    }
-//}
-
 // MARK: geographic coordinates support
 struct Coordinates: Hashable, Codable {
     init(from: CoordinateData) {

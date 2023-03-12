@@ -71,7 +71,6 @@
 		00AB9A2C29B25CCF00336393 /* CoordinateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2829B25CCF00336393 /* CoordinateData.swift */; };
 		00AB9A2D29B25CCF00336393 /* CoordinateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2829B25CCF00336393 /* CoordinateData.swift */; };
 		00AB9A2E29B25CCF00336393 /* CoordinateData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2829B25CCF00336393 /* CoordinateData.swift */; };
-		00AB9A3029B47FA400336393 /* DelayedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00AB9A2F29B47FA400336393 /* DelayedView.swift */; };
 		00FFF65329BC82EA00A028F5 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FFF65229BC82EA00A028F5 /* CameraView.swift */; };
 /* End PBXBuildFile section */
 
@@ -144,7 +143,6 @@
 		00921FA529AF4BE10020A426 /* MemoryData+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "MemoryData+Schema.swift"; path = "amplify/generated/models/MemoryData+Schema.swift"; sourceTree = "<group>"; };
 		00AB9A2729B25CCF00336393 /* CoordinateData+Schema.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "CoordinateData+Schema.swift"; path = "amplify/generated/models/CoordinateData+Schema.swift"; sourceTree = "<group>"; };
 		00AB9A2829B25CCF00336393 /* CoordinateData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoordinateData.swift; path = amplify/generated/models/CoordinateData.swift; sourceTree = "<group>"; };
-		00AB9A2F29B47FA400336393 /* DelayedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayedView.swift; sourceTree = "<group>"; };
 		00FFF65229BC82EA00A028F5 /* CameraView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -192,7 +190,6 @@
 				000AA58329B722B600030DFE /* MemoryCondensedView.swift */,
 				000AA57E29B7219B00030DFE /* MemoryDetailView.swift */,
 				00286C1629B139A8009ECE0E /* MapView.swift */,
-				00AB9A2F29B47FA400336393 /* DelayedView.swift */,
 				0091058E29B8985A00111746 /* AddMemoryView.swift */,
 			);
 			name = views;
@@ -563,7 +560,6 @@
 				00921F9F29AF45520020A426 /* ViewModel.swift in Sources */,
 				00921FA129AF49050020A426 /* Model.swift in Sources */,
 				000AA58D29B724E900030DFE /* CachedImageManager.swift in Sources */,
-				00AB9A3029B47FA400336393 /* DelayedView.swift in Sources */,
 				00AB9A2929B25CCF00336393 /* CoordinateData+Schema.swift in Sources */,
 				00286C1729B139A8009ECE0E /* MapView.swift in Sources */,
 				00729D1629B0F24200BDA200 /* ModelMock.swift in Sources */,

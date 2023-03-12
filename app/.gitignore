@@ -1,4 +1,5 @@
 #amplify-do-not-edit-begin
+amplify/**/cli-inputs.json
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/logs
