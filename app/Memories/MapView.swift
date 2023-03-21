@@ -20,7 +20,7 @@ import Logging
 struct MapView: View {
     
     let memories: [Memory]
-    @ObservedObject var locationManager: LocationManager = .shared
+    @ObservedObject var locationManager = LocationManager()
 
     init(memories: [Memory]) {
         // only show memories that have a coordinate

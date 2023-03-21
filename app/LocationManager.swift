@@ -12,6 +12,8 @@ import Logging
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     
+    private static let coordinateSpan = 0.2
+    
     static let defaultLocation = CLLocationCoordinate2D(latitude: 50.6292,
                                                         longitude: 3.0573)
     
@@ -22,11 +24,11 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var location: CLLocationCoordinate2D?
     @Published var region : MKCoordinateRegion = .init(
         center: LocationManager.defaultLocation,
-        span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)
+        span: MKCoordinateSpan(latitudeDelta: coordinateSpan,
+                               longitudeDelta: coordinateSpan)
     )
     
-    public static var shared: LocationManager = LocationManager()
-    private override init() {
+    public override init() {
         super.init()
         
 #if DEBUG
@@ -59,10 +61,8 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             location = l.coordinate
             
             region = MKCoordinateRegion(center: l.coordinate,
-                                        span: MKCoordinateSpan(latitudeDelta: 0.3,
-                                                               longitudeDelta: 0.3))
+                                        span: region.span) // reuse whatever span user choosed
         }
-        
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

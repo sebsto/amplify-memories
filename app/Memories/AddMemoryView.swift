@@ -13,8 +13,8 @@ struct AddMemoryView: View {
     @EnvironmentObject var cameraModel: CameraViewModel // to access the CameraView state
     @EnvironmentObject var mainModel: ViewModel // to access backend functions
     
-    @ObservedObject var locationManager: LocationManager = .shared
-    
+    @ObservedObject var locationManager = LocationManager()
+
     // data
     var image: UIImage? = nil
     var previewImage: Image? = nil // for preview only
@@ -47,7 +47,6 @@ struct AddMemoryView: View {
             // Xcode 14: Publishing changes from within view updates
             // https://developer.apple.com/forums/thread/711899?answerId=732977022#732977022
             
-            //            Map(coordinateRegion: $locationManager.region,
             Map(coordinateRegion: .init(get: {
                 locationManager.region
             }, set: { region in
@@ -55,6 +54,7 @@ struct AddMemoryView: View {
                     locationManager.region = region
                 }
             }),
+//            Map(coordinateRegion: $locationManager.region,
                 interactionModes: .all,
                 showsUserLocation: true,
                 userTrackingMode: nil)
