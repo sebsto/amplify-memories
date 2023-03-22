@@ -21,7 +21,6 @@ struct AddMemoryView: View {
     
     @State var description : String = ""
     
-    
     var body: some View {
         VStack(spacing: 0.0) {
             

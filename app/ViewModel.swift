@@ -134,26 +134,29 @@ extension ViewModel {
     func createMemory(description: String, image: UIImage, coordinates: Coordinates?) async {
         
         do {
-            // save the image on a background thread
-            let imageName = UUID().uuidString
-            if let data = image.resize(to: 0.10).pngData() {
-                Task {
-                    await self.backend.storeImage(name: imageName,
-                                                  image: data)
-                }
-            }
-
-            // save the memory on a background thread
+            //create the memory
             let user = try await self.backend.currentUser()
+            let imageName = UUID().uuidString
             let memory = Memory(owner: user.userId,
                             moment: Date.now,
                             description: description,
                             image: imageName,
                             coordinate: coordinates)
-            self.memories.append(memory)
-            self.tabSelected = 0 // 0 to switch to today's view
-            self.state = .dataAvailable
 
+            // craete the image and save it on a background thread
+            if let data = image.resize(to: 0.10).pngData() {
+                Task {
+                    await self.backend.storeImage(name: imageName,
+                                                  image: data)
+                    
+                    // change UI state when image is loaded
+                    self.memories.insert(memory, at: 0) // insert at the top of the list
+                    self.tabSelected = 0 // 0 to switch to today's view
+                    self.state = .dataAvailable
+                }
+            }
+
+            // save the memory on a background thread
             Task {
                 try await self.backend.createMemory(memory)
             }

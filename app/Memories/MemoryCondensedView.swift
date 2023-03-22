@@ -27,9 +27,11 @@ struct MemoryCondensedView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.bottom)
             }
-            .onAppear {
+            .onAppear() {
                 Task {
-                    self.imageURL = await model.imageURL(for: memory)
+                    if self.imageURL == nil {
+                        self.imageURL = await model.imageURL(for: memory)
+                    }
                 }
             }
             
