@@ -144,6 +144,8 @@ extension Backend {
                 
                 // try signin again
                 try await self.signIn(user)
+            } else {
+                logger.error("Unexpected AuthError: \(error)")
             }
         } catch {
             fatalError("Unexpected error : \(error)")

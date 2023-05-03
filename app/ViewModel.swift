@@ -9,6 +9,8 @@ import Foundation
 import AuthenticationServices
 import Logging
 
+import Amplify // for error handling only
+
 //
 // a set of functions to support the View and isolate it from the backend
 //
@@ -125,8 +127,18 @@ extension ViewModel {
             let result = try await self.backend.todayMemories()
             self.memories = result.sorted{ $0.moment > $1.moment }
             self.state = .dataAvailable
+        } catch let error as APIError {
+            if error.underlyingError is AuthError {
+                logger.error("This is an auth error, going to signout and represent the unauth view")
+                Task {
+                    await self.backend.signOut()
+                }
+            } else {
+                logger.error("Can not fetch the memories. API Error is not Auth Error : \(error)")
+                self.state = .error(error)
+            }
         } catch {
-            logger.error("Can not fetch the memories : \(error)")
+            logger.error("Can not fetch the memories (unknown error) : \(error)")
             self.state = .error(error)
         }
     }
